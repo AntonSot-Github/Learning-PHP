@@ -64,5 +64,30 @@ print_r (formatSize(456286732));
 
 //используем list в примере
 list($bytes, $kBytes, $MBytes, $GBytes) = (formatSize(356274795)); 
-echo $bytes, " ", $kBytes, " ", $MBytes, " ", $GBytes;
+echo $bytes, " ", $kBytes, " ", $MBytes, " ", $GBytes, "\n";
 
+//Рекурсивные функции
+nStr("Рекурсивные функции");
+function rekursia($counter){
+    if($counter > 0){
+        echo ($counter--), "\n";
+        rekursia($counter);//функция вызывает сама себя, пока $counter > 0 
+    } else return;
+}
+rekursia(8);
+
+//Пример вызова функции через переменную
+nStr("Пример вызова функции через переменную");
+function first(){
+    return "1";
+}
+function second(){
+    return "2";
+}
+
+$newFunction = rand(0, 1) ? "first" : "second";//В условии генерируется либо 1(истина), либо ноль(ложь)
+echo $newFunction, "\n";
+
+$str = "dfgherty";
+$s = str_contains($str, "gho");
+echo $s;

@@ -1,5 +1,5 @@
 <?php
 
 function nStr($text = ''){
-    echo ("\n======== $text ========\n\n");
+    echo ("\n\n======== $text ========\n\n");
 }
