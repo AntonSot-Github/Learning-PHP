@@ -22,3 +22,17 @@ $res = substr($str, 1, 3);
 // 2 - индекс символа, откуда начать вывод подстроки
 // 3 - количество выводимых символов
 echo $res, "\n";//win
+
+
+//Пример HEREDOC и NOWDOC
+nStr("Пример HEREDOC и NOWDOC");
+
+$name = 'Sot';
+echo <<<HEREDOC
+My name is {$name} 
+
+HEREDOC;//My name is Sot
+
+echo <<<'NOWDOC'
+My name is $name
+NOWDOC;//My name is $name
