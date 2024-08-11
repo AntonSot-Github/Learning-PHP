@@ -1,6 +1,6 @@
 <?php
 //Цикл while
-
+echo '<hr>';
 $i = 0;
 while ($i <= 10){
     $i++;
@@ -10,6 +10,7 @@ while ($i <= 10){
 echo "\n\n";
 
 //Цикл while с шагом на уменьшение
+echo '<hr>';
 $i = 1000;
 while($i >0){
     $i = $i - 100;
@@ -19,6 +20,7 @@ while($i >0){
 echo "\n\n";
 
 //Цикл while с прерыванием break
+echo '<hr>';
 $i = 1000;
 while($i >0){    
     $i = $i - 100;
@@ -29,6 +31,7 @@ while($i >0){
 echo "\n\n";
 
 //Цикл while с пропуском итерации continue
+echo '<hr>';
 $i = 1000;
 while($i >0){    
     $i = $i - 100;
@@ -39,6 +42,7 @@ while($i >0){
 echo "\n\n";
 
 //Цикл while с нахождением суммы чисел
+echo '<hr>';
 $i = 0; //счетчик
 $sum = 0; //Перменная для накопления
 while ($i <= 5){
@@ -51,6 +55,7 @@ echo "\n\n";
 
 //Цикл while - задача
 //Нужно вывести, на каком шаге итерации накопленная сумма составит 1000
+echo '<hr>';
 $i = 0;
 $sum = 0;
 while ($sum <= 1000){
@@ -62,6 +67,7 @@ echo $i, "\n";
 
 //Цикл do while
 //Отличие в том, что хотя бы 1 раз цикл выполнится в независимости от значения счетчика
+echo '<hr>';
 $i = 0;
 do{
     $i++;
@@ -76,7 +82,7 @@ $year1= 2000;
 $year2 = 2022;
 
 # write your code under this line
-
+echo '<hr>';
 $out = '';
 while ($year1 <= $year2) {
     if ($year1 % 2 == 0) $out .= $year1.' ';
@@ -100,6 +106,7 @@ $n = 7;
 $out = '';
 
 # write your code under this line
+echo '<hr>';
 while ($n >= 1) {
     //если n нечетная, то условие в if не выполняется, поэтому блок if пропускается и работает декримент
     //вне блока if
@@ -119,7 +126,7 @@ echo $out; //7_5_3_1_
 $n = 17;
 $p = 1;
 # write your code under this line
-
+echo '<hr>';
 $i = 0;
 while ($i <= 17) {
     $i++;
@@ -136,10 +143,35 @@ $n = 13;
 $out = '';
 # write your code under this line
 
+echo '<hr>';
 $i = 0;
 while ($i < $n) {
     $i++;
     if($i == 4 || $i == 7 || $i == 9) continue;
     else $out .= $i.'_';
 }
-echo $out; //1_2_3_5_6_8_10_11_12_13_
+echo $out, "\n"; //1_2_3_5_6_8_10_11_12_13_
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cykles while-do-while</title>
+</head>
+<body>
+    <?php
+    echo '<hr>';
+    echo '--- Example of using cycle while in real code ---', '<br>', '<br>';
+    echo '<select style = "margin-left: 7%;">';
+        $year = 1900;
+        while ($year <= 2024){
+            echo "<option>{$year}</option><br>";
+            $year++;
+        }
+    echo '</select>', '<br>', '<br>';
+    echo '<hr>';
+    ?>
+</body>
+</html>
