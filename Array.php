@@ -213,10 +213,35 @@ $products = [
     ],
 ];
 
-echo "<pre>" . print_r($products, 1) . "</pre>";
+echo print_r($products, 1), "\n";
 
-echo $products[0]['title'] . '<br>';
-echo $products[0]['price'] . '<br>';
+echo $products[0]['title'] , "\n";
+echo $products[0]['price'] , "\n";
 
-echo $products[1]['title'] . '<br>';
-echo $products[1]['price'] . '<br>';
+echo $products[1]['title'] , "\n";
+echo $products[1]['price'] , "\n";
+
+//Создаём массив от 1 до 10
+nStr("Создаём массив от 1 до 10");
+//С помощью for
+nStr("С помощью for");
+for ($i = 1; $i <= 10; $i++) $arrFrom1To10[$i - 1] = $i;
+print_r($arrFrom1To10);
+
+//С помощью while и push
+nStr("С помощью while и push");
+$arrFrom_1_To_10 = [];
+$i = 1;
+while ($i <= 10) {
+    array_push($arrFrom_1_To_10, $i);
+    $i++;
+}
+print_r($arrFrom_1_To_10);
+
+//С помощью range()
+nStr("С помощью range()");
+$arr = range(1, 10, 3);
+print_r($arr);
+
+$arr_A_Z = range("A", "F");
+print_r($arr_A_Z);
