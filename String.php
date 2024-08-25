@@ -36,3 +36,14 @@ HEREDOC;//My name is Sot
 echo <<<'NOWDOC'
 My name is $name
 NOWDOC;//My name is $name
+
+echo "\n";
+$str = "";
+var_dump(!$str);
+
+//Функция explode()
+nStr("Функция explode()");
+$str = "first, second, third, forth, fifth, sixth";
+$arrByExplode = explode(", ", $str, 4);
+print_r($arrByExplode);
+

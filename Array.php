@@ -244,4 +244,4 @@ $arr = range(1, 10, 3);
 print_r($arr);
 
 $arr_A_Z = range("A", "F");
-print_r($arr_A_Z);
+print_r($arr_A_Z);    
