@@ -43,7 +43,23 @@ var_dump(!$str);
 
 //Функция explode()
 nStr("Функция explode()");
+
 $str = "first, second, third, forth, fifth, sixth";
 $arrByExplode = explode(", ", $str, 4);
 print_r($arrByExplode);
+/* Array
+(
+    [0] => first
+    [1] => second
+    [2] => third
+    [3] => forth, fifth, sixth
+) */
+
+
+//Функция implode()
+nStr("Функция implode()");
+
+$arr = ["it", "is", "rain", "now"];
+$str = implode(" ", $arr);
+print_r($str);//it is rain now
 
