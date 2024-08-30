@@ -1,7 +1,20 @@
 
-<?php 
-    var_dump($_GET, $_POST);
-
+<?php  
+    function dump($data){
+        echo "<pre>" . print_r($data, 1) . "</pre>";
+    }
+    //Проверяем массив POST на пустоту и 
+    //если массив пуст, мы его не выводим на страницу
+    if(!empty($_POST)){
+        dump($_POST);
+        //Проверяем, существует ли элемент-ключ 'choise' в POST
+        if(isset($_POST['choise'])){
+            echo 'choosed AGREE', "\n";
+        }else{
+            echo 'choosed NOT AGREE', "\n";
+        }
+    }
+    
 ?>
 
 <!DOCTYPE html>
@@ -47,7 +60,7 @@
             </div>
 
             <div class="form-check mb-3">
-                <input class="form-check-input" type="checkbox" id="Agree">
+                <input class="form-check-input" type="checkbox" id="Agree" name="choise">
                 <label class="form-check-label" for="Agree">
                     Agree?
                 </label>
@@ -63,8 +76,10 @@
             <button type="submit" name="send-form" class="btn btn-primary mb-3">
                 Send
             </button>
-
+            
         </form>
+
+        
     </div>
 
 
