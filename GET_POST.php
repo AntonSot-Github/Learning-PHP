@@ -14,7 +14,7 @@
             echo 'choosed NOT AGREE', "\n";
         }
     }
-    
+    dump($_GET);
 ?>
 
 <!DOCTYPE html>
@@ -25,6 +25,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     <title>Form-Example</title>
     <style>
+        body{
+            height: 125vw
+        }
         h1{
             text-align: center;
         }
@@ -33,6 +36,7 @@
             justify-content: center;
             width: 100vw;
             background-color: pink;
+            padding-top: 25px;
         }
         form{
             width: 50%;
@@ -42,9 +46,9 @@
 <body>
     <h1>Form-Example</h1>
     <div class="form-wrapper">
-        <form action="" method="post">
+        <form action="/PHP/Help_files_PHP/action.php" method="post">
 
-            <div class="mb-3">
+            <div class="mb-3 ">
                 <label for="name" class="form-label">Name</label>
                 <input type="name" class="form-control" id="name" placeholder="Name" name="name">
             </div>
@@ -67,19 +71,30 @@
             </div>
 
             <select class="form-select mb-3" aria-label="Default select example" name="language">
-                <option selected>Select the language</option>
                 <option value="English">English</option>
                 <option value="Fr">French</option>
                 <option value="De">German</option>
             </select>
 
-            <button type="submit" name="send-form" class="btn btn-primary mb-3">
+            <button type="submit" class="btn btn-primary mb-3">
                 Send
             </button>
             
         </form>
+    </div>
+    <div class="form-wrapper">        
+        <form action="/PHP/Help_files_PHP/action.php" method="GET">
 
-        
+            <div class="mb-3 ">
+                <label for="search" class="form-label">Search</label>
+                <input type="search" class="form-control" id="name" placeholder="search" name="search">
+            </div>
+
+            <button type="submit" class="btn btn-primary mb-3">
+                Search
+            </button>
+
+        </form>
     </div>
 
 

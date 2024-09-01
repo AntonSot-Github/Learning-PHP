@@ -162,16 +162,16 @@ echo $out, "\n"; //1_2_3_5_6_8_10_11_12_13_
 </head>
 <body>
     <?php
-    echo '<hr>';
-    echo '--- Example of using cycle while in real code ---', '<br>', '<br>';
-    echo '<select style = "margin-left: 7%;">';
-        $year = 1900;
-        while ($year <= 2024){
-            echo "<option>{$year}</option><br>";
-            $year++;
-        }
-    echo '</select>', '<br>', '<br>';
-    echo '<hr>';
+        echo '<hr>';
+        echo '--- Example of using cycle while in real code ---', '<br>', '<br>';
+        echo '<select style = "margin-left: 7%;">';
+            $year = 1900;
+            while ($year <= 2024){
+                echo "<option>{$year}</option><br>";
+                $year++;
+            }
+        echo '</select>', '<br>', '<br>';
+        echo '<hr>';
     ?>
 </body>
 </html>

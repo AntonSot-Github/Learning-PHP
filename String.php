@@ -62,4 +62,3 @@ nStr("Функция implode()");
 $arr = ["it", "is", "rain", "now"];
 $str = implode(" ", $arr);
 print_r($str);//it is rain now
-

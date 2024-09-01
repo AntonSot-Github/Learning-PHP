@@ -12,7 +12,7 @@ echo "\n";
 //сокращенная форма написания на проверку условия без ветвления
 if ($a % 2 === 0) echo "variable a is even number", "\n";//проверка на четность
 
-//Пример использования If на практическом примере
+//Пример использования If на практике
 $password = "adsdererf";
 $email = "fauna@gmail.com";
 if (strlen($password) > 8)
@@ -40,3 +40,4 @@ if ($s < 45) echo "bronze", "\n";
 elseif ($s < 75) echo "silver", "\n";
 elseif ($s < 125) echo "gold", "\n";
 else echo "VIP", "\n";
+
