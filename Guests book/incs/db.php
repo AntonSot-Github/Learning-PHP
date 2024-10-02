@@ -12,7 +12,7 @@ $db_options = [
     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
 ];
 
-//Вариант подключения к БД
+//PDO подключение к БД
 $dsn = "mysql:dbname={$db_config['db_name']};host={$db_config['host']};charset=utf8";
 
 //Строка подключения к БД

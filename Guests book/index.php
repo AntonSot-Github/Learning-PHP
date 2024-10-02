@@ -1,6 +1,11 @@
 <?php
+session_start();
 
+$title = 'Home';//Наименование страницы
+
+require_once __DIR__ . '/vendor/autoload.php';//подключение библиотеки для валидации
 require_once __DIR__ . '/incs/db.php';
+require_once __DIR__ . '/incs/functions.php';
 
 ?>
 
@@ -11,15 +16,15 @@ require_once __DIR__ . '/incs/db.php';
 
           <div class="col-12 mb-4">
 
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-              Error!
-              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-
+          <?php if (isset($_SESSION['success'])): ?>
             <div class="alert alert-success alert-dismissible fade show" role="alert">
-              Success!
+              <?php 
+                echo $_SESSION['success'];//вывести сообщение об ошибке
+                unset($_SESSION['success']);//сразу удалить после обновления страницы
+              ?>
               <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
+            <?php endif ?>
 
           </div>
 
