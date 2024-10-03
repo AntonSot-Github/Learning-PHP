@@ -7,6 +7,26 @@ require_once __DIR__ . '/vendor/autoload.php';//подключение библ�
 require_once __DIR__ . '/incs/db.php';
 require_once __DIR__ . '/incs/functions.php';
 
+//Валидация сообщения от пользователя и запись ошибки в $_SESSION['errors'] в случае, если 
+//попытались риправить пустое сообщение
+if (isset($_POST['send-message'])){
+  $data = load(['message']);
+  $v = new Valitron\Validator($data);
+  $v->rules([
+    'required' => ['message'],
+  ]);
+  if ($v->validate()){
+    if (save_message($data)){
+      redirect('index.php');
+    }
+  } else {
+    $_SESSION['errors'] = get_errors($v->errors());
+  }
+}
+
+$messages = get_messages();//все сообщения из БД
+
+
 ?>
 
 <?php require_once __DIR__ . '/views/incs/header.tpl.php' ?>
@@ -16,108 +36,100 @@ require_once __DIR__ . '/incs/functions.php';
 
           <div class="col-12 mb-4">
 
-          <?php if (isset($_SESSION['success'])): ?>
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-              <?php 
-                echo $_SESSION['success'];//вывести сообщение об ошибке
-                unset($_SESSION['success']);//сразу удалить после обновления страницы
-              ?>
-              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
+            <!-- Сообщение об успешной отправке сообшения из формы -->
+            <?php if (isset($_SESSION['success'])): ?>
+              <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <?php 
+                  echo $_SESSION['success'];//вывести сообщение об отправке сообщения
+                  unset($_SESSION['success']);//сразу удалить после обновления страницы
+                ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+              <?php endif ?>
+              
+
+              <!-- Сообщение об ошибке при отправке сообшения из формы -->
+              <?php if (isset($_SESSION['errors'])): ?>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                  <?php 
+                    echo $_SESSION['errors'];//вывести сообщение об ошибке отпраки сообщения
+                    unset($_SESSION['errors']);//сразу очистить $_SESSION['Message is required'] после обновления страницы
+                  ?>
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
             <?php endif ?>
 
           </div>
 
-          <form action="" class="mb-2">
+            <!-- Скрываем форму, пока пользователь не авторизуется -->
+            <?php if (check_auth()): ?>
+              <form class="mb-2" method="post">
 
-            <div class="form-floating mb-2">
-              <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" style="height: 5%;"></textarea>
-              <label for="floatingTextarea">Comments</label>
-            </div>
+                <div class="form-floating mb-2">
+                  <textarea name="message" class="form-control" placeholder="Leave a comment here" id="floatingTextarea" style="height: 150px;"></textarea>
+                  <label for="floatingTextarea">Comments</label>
+                </div>
 
-            <button type="submit" class="btn btn-primary">Send</button>
+                <button name="send-message" type="submit" class="btn btn-primary">Send</button>
 
-          </form>
+              </form>
 
-          <hr>
-
+              <hr>
+            <?php endif; ?>
         </div>
 
 
         <div class="row">
           <div class="col-12">
 
-            <div class="card mb-3">
-              <div class="card-body">
-                <div class="d-flex justify-content-between">
-                  <h5 class="card-title">User 1</h5>
-                  <p class="massage-created">2024-07-23 12:10</p>
-                </div>
+            <?php if(!empty($messages)): ?>
+              <?php foreach($messages as $message): ?>
+               
 
-                <div class="card-text"></div>
-
-                <div class="card-action">
-
-                  <p>
-                    <a href="#">Disable</a> |
-                    <a href="#">Approve</a> |
-                    <a data-bs-toggle="collapse" href="#collapse-1" role="button" aria-expanded="false" aria-controls="collapse-1">Edit</a>
-                  </p>
-
-                  <div class="collapse" id="collapse-1">
-
-                    <form action="">
-
-                      <div class="form-floating mb-2">
-                        <textarea class="form-control" placeholder="Leave a comment here" id="message-1" style="height: 100px;">Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.</textarea>
-                        <label for="message-1">Comments</label>
+                  <div class="card mb-3 <?php if(!$message['status']) echo 'border-danger'?>" id="message-<?php echo $message['id'] ?>">
+                    <div class="card-body">
+                      <div class="d-flex justify-content-between">
+                        <h5 class="card-title"><?php echo $_SESSION['user']['name'] ?></h5>
+                        <p class="massage-created"><?php echo $message['created_at'] ?></p>
                       </div>
 
-                      <button type="submit" class="btn btn-primary">Save</button>
-
-                    </form>
-
-                  </div>
-                </div>
-
-              </div>
-            </div>
-
-            <div class="card mb-3">
-              <div class="card-body">
-                <div class="d-flex justify-content-between">
-                  <h5 class="card-title">User 2</h5>
-                  <p class="massage-created">2024-07-25 16:20</p>
-                </div>
-
-                <div class="card-text"></div>
-
-                <div class="card-action">
-
-                  <p>
-                    <a href="#">Disable</a> |
-                    <a href="#">Approve</a> |
-                    <a href="#collapse-2" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapse-2">Edit</a>
-                  </p>
-
-                  <div class="collapse" id="collapse-2">
-
-                    <form action="">
-
-                      <div class="form-floating mb-2">
-                        <textarea class="form-control" placeholder="Leave a comment here" id="message-2" style="height: 100px;">Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.</textarea>
-                        <label for="message-2">Comments</label>
+                      <div class="card-text">
+                        <?php echo nl2br(h($message['message']))//выводим сообщение и применяем функции для удаления html-тэгов и перевода строк ?>
                       </div>
 
-                      <button type="submit" class="btn btn-primary">Save</button>
+                      <div class="card-action">
+                        <!-- Если админ, то показываем кнопки -->
+                        <?php if(check_adm()): ?>
+                          <p>
+                            <a href="#">Disable</a> |
+                            <a href="#">Approve</a> |
+                            <a data-bs-toggle="collapse" href="#collapse-<?php echo $message['id'] ?>" role="button" aria-expanded="false">Edit</a>
+                          </p>
+                        <?php endif ?>
 
-                    </form>
+                        <div class="collapse" id="collapse-<?php echo $message['id'] ?>">
 
+                          <form action="">
+
+                            <div class="form-floating mb-2">
+                              <textarea class="form-control" placeholder="Leave a comment here" id="message-<?php echo $message['id'] ?>" style="height: 100px;"><?php echo $message['message'] ?></textarea>
+                              <label for="message-<?php echo $message['id'] ?>">Comments</label>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Save</button>
+
+                          </form>
+
+                        </div>
+                      </div>
+
+                    </div>
                   </div>
-                </div>
+              <?php endforeach; ?>
+            <?php else: ?>
+                <p>Messages are not found</p>
 
-              </div>
-            </div>
+            <?php endif ?>
             
           </div>
         </div>

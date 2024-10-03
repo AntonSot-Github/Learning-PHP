@@ -9,13 +9,15 @@ function dump(array | object $data): void
 $fillable = ['name', 'email', 'password'];
 function load (array $fillable, $post = true): array
 {
+    // Если $post равно true, то используем $_POST, иначе $_GET
     $load_data = $post ? $_POST : $_GET;
-    $data = [];
+    $data = [];// Массив для сохранения данных из формы
     foreach ($fillable as $field) {
+        // Если поле существует в $load_data, добавляем его в массив $data
         if (isset($load_data[$field])){
             $data[$field] = trim($load_data[$field]);
         } else {
-            $data[$field] = '';
+            $data[$field] = '';// Если поле не существует, сохраняем пустую строку
         }
     }
     return $data;
@@ -107,6 +109,32 @@ function login (array $data): bool
     }
     $_SESSION['success'] = 'You have successfully login';
     return true;
+}
+
+//Функция для сохранения сообщений от пользователей
+function save_message(array $data): bool
+{
+    global $dbh;
+    if (!check_auth()) {
+        $_SESSION['errors'] = 'Login required';
+        return false;
+    }
+    $stmt = $dbh->prepare("INSERT INTO messages (user_id, message) VALUES (?, ?)");
+    $stmt->execute([$_SESSION['user']['id'], $data['message']]);
+    $_SESSION['success'] = 'Message added';
+    return true;
+}
+
+function get_messages():array
+{
+    global $dbh;
+    $where = '';
+    if (!check_adm()) {
+        $where = 'WHERE status = 1';
+    }
+    $stmt = $dbh->prepare("SELECT * FROM messages {$where}");
+    $stmt->execute();
+    return $stmt->fetchAll();
 }
 
 //Функция проверки существования данного пользователя
