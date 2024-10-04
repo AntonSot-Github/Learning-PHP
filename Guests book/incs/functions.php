@@ -132,7 +132,11 @@ function get_messages():array
     if (!check_adm()) {
         $where = 'WHERE status = 1';
     }
-    $stmt = $dbh->prepare("SELECT * FROM messages {$where}");
+    //Используем оператор JOIN для объединения таблиц, добавляя к таблице message столбец name по столбцам id в users и user_id в messages
+    //Записываем через запятую все поля, которые хотим видеть в массиве $messages
+    //Также форматируем вывод времени создания сообщения: указываем столбец с временем(messages.created_at), а затем эл-т массива(created_at2), куда вернуть отформатированное значение
+    //FROM messages m - это псевдоним таблицы message
+    $stmt = $dbh->prepare("SELECT m.id, m.user_id, m.message, m.status, DATE_FORMAT(m.created_at, '%d/%m/%Y %H:%i') AS created_at2, users.name FROM messages m JOIN users ON users.id = m.user_id {$where}");
     $stmt->execute();
     return $stmt->fetchAll();
 }

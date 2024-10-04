@@ -25,6 +25,7 @@ if (isset($_POST['send-message'])){
 }
 
 $messages = get_messages();//все сообщения из БД
+dump($messages);
 
 
 ?>
@@ -89,8 +90,8 @@ $messages = get_messages();//все сообщения из БД
                   <div class="card mb-3 <?php if(!$message['status']) echo 'border-danger'?>" id="message-<?php echo $message['id'] ?>">
                     <div class="card-body">
                       <div class="d-flex justify-content-between">
-                        <h5 class="card-title"><?php echo $_SESSION['user']['name'] ?></h5>
-                        <p class="massage-created"><?php echo $message['created_at'] ?></p>
+                        <h5 class="card-title"><?php echo $message['name'] ?></h5>
+                        <p class="massage-created"><?php echo $message['created_at2'] ?></p>
                       </div>
 
                       <div class="card-text">
