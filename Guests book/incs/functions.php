@@ -121,11 +121,24 @@ function save_message(array $data): bool
     }
     $stmt = $dbh->prepare("INSERT INTO messages (user_id, message) VALUES (?, ?)");
     $stmt->execute([$_SESSION['user']['id'], $data['message']]);
-    $_SESSION['success'] = 'Message added';
+    $_SESSION['success'] = 'Message has been added';
     return true;
 }
 
-function get_messages():array
+function edit_message(array $data): bool
+{
+    global $dbh;
+    if (!check_adm()) {
+        $_SESSION['errors'] = 'Forbidden';
+        return false;
+    }
+    $stmt = $dbh->prepare("UPDATE messages SET message = ? WHERE id = ?");
+    $stmt->execute([$data['message'], $data['id']]);
+    $_SESSION['success'] = 'The message has been saved';
+    return true;
+}
+
+function get_messages(int $start, int $per_page):array
 {
     global $dbh;
     $where = '';
@@ -136,9 +149,36 @@ function get_messages():array
     //Записываем через запятую все поля, которые хотим видеть в массиве $messages
     //Также форматируем вывод времени создания сообщения: указываем столбец с временем(messages.created_at), а затем эл-т массива(created_at2), куда вернуть отформатированное значение
     //FROM messages m - это псевдоним таблицы message
-    $stmt = $dbh->prepare("SELECT m.id, m.user_id, m.message, m.status, DATE_FORMAT(m.created_at, '%d/%m/%Y %H:%i') AS created_at2, users.name FROM messages m JOIN users ON users.id = m.user_id {$where}");
+    //ORDER BY id DESC - упорядочить сообщения по дате
+    $stmt = $dbh->prepare("SELECT m.id, m.user_id, m.message, m.status, DATE_FORMAT(m.created_at, '%d/%m/%Y %H:%i') AS created_at2, users.name FROM messages m JOIN users ON users.id = m.user_id {$where} ORDER BY id DESC LIMIT $start, $per_page");
     $stmt->execute();
     return $stmt->fetchAll();
+}
+
+//Считает, сколько у нас всего сообщений
+function get_count_messages(): int
+{
+    global $dbh;
+    $where = '';
+    if (!check_adm()) {
+        $where = 'WHERE status = 1';
+    }
+    //не берем данные извне, поэтому используем ф-цию query
+    $res = $dbh->query("SELECT COUNT(*) FROM messages {$where}");
+    return $res->fetchColumn();//возвращает одну колонку
+}
+
+//Измение админом статуса сообщений
+function toggle_message_status(int $status, int $id): bool
+{
+    global $dbh;
+    if (!check_adm()){
+        $_SESSION['errors'] = 'Forbidden';
+        return false;
+    }
+    $status = $status ? 1 : 0;
+    $stmt = $dbh->prepare("UPDATE messages SET status = ? WHERE id = ?");
+    return $stmt->execute([$status, $id]);
 }
 
 //Функция проверки существования данного пользователя
