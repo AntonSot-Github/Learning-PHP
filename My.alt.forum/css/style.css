@@ -68,9 +68,17 @@ form textarea {
 .message-number {
   text-align: center;
 }
+.message-links {
+  position: relative;
+  width: 100%;
+  text-align: right;
+}
 .message-edition {
+  align-self: flex-end;
+  width: 100%;
   display: flex;
-  justify-content: flex-end;
+  flex-direction: column;
+  align-items: flex-end;
 }
 .message-edition-text {
   position: relative;
@@ -91,4 +99,18 @@ form textarea {
 
 .opacity-0 {
   opacity: 0;
+}
+
+.display-none {
+  display: none;
+}
+
+.saveBtn {
+  text-decoration: none;
+}
+
+.pagination {
+  width: 50%;
+  margin: 0 auto;
+  text-align: center;
 }/*# sourceMappingURL=style.css.map */
