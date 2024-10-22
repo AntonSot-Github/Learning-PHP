@@ -6,6 +6,7 @@ require_once __DIR__. '/php/functions.php';
 // Проверка, передан ли параметр 'page' через GET. Если передан, сохраняем его, иначе устанавливаем значение 1 (страница по умолчанию)
 $page = isset($_GET['page']) ? $_GET['page'] : 1;
 
+
 saveGet($page);// Сохранение текущего номера страницы в файл через функцию saveGet
 // Функция для сохранения номера страницы в файл get.txt
 function saveGet($data){
@@ -83,14 +84,43 @@ if (isset($_POST['edit']) && ($_POST['edit'] !== "")){
     exit;
 }
 
+//Функция перехода на предыдущую страницу
+if (isset($_GET['do']) && $_GET['do'] == 'prev_page'){
+    //Если номер страницы в строке не равен номеру первой страницы,
+    //изменяем номер в строке на -1
+    if ($_GET['page'] != 1){
+        header("Location: index.php?page=" . $_GET['page'] - 1);
+        exit;
+    //Если равен, переходим на первую страницу
+    } else {
+        header("Location: index.php?page=1");
+        exit;
+    }
+
+}
+
+//Функция перехода на следующую страницу
+if (isset($_GET['do']) && $_GET['do'] == 'next_page'){
+    //Если номер страницы в строке не равен номеру последней страницы,
+    //изменяем номер в строке на +1
+    if ($_GET['page'] != $page_count){
+        header("Location: index.php?page=" . $_GET['page'] + 1);
+        exit;
+    //Если равен, переходим на последнюю страницу, равной всему количеству страниц
+    } else {
+        header("Location: index.php?page={$page_count}");
+        exit;
+    }
+
+}
+
 /* echo ceil(count($arrMsg) / $nMsg), "<br>";
 echo count($arrMsg), "<br>";
 echo '$page = ' . $page, "<br>";
 echo '$fileGet = ' . $fileGet, "<br>";
 print_r($_GET); */
-
-
-
+//echo '$page_count = ' . $page_count, "<br>";
+//print_r($_GET['page']);
 ?>
 
 <!DOCTYPE html>
@@ -101,11 +131,15 @@ print_r($_GET); */
     <title>My alternative forum</title>
     <link rel="stylesheet" href="css/style.css">
     <script>
+        // Когда весь документ загружен и DOM готов, выполняем эту функцию
         document.addEventListener('DOMContentLoaded', function() {
 
+            // Ищем все элементы с классом "edit-btn" (кнопки редактирования) и сохраняем в переменной
             let msgEditBtn = document.querySelectorAll(".edit-btn");
 
+            // Перебираем каждую кнопку редактирования, используя forEach
             msgEditBtn.forEach(function(btn, index) {
+                // Для каждой кнопки добавляем обработчик событий "click"
                 btn.addEventListener("click", function() {
 
                 // Найдем родительский элемент message-box для данной кнопки
@@ -114,12 +148,15 @@ print_r($_GET); */
                 // Внутри этого message-box найдем элемент с классом msg-editor
                 let editor = messageBox.querySelector(".msg-editor");
 
+                 // Ищем кнопку "Save" внутри того же message-box
                 let saveBtn = messageBox.querySelector(".saveBtn");
 
+                // Если нашли кнопку сохранения, переключаем для неё класс "display-none" (чтобы показывать/скрывать её)
                 if (saveBtn) {
                 saveBtn.classList.toggle("display-none");
                 }
 
+                // Переключаем класс "non-display" и "opacity-0" для редактора
                 // Тогглим класс только у этого элемента
                 if (editor) {
                     editor.classList.toggle("non-display");
@@ -134,6 +171,7 @@ print_r($_GET); */
     <div class="container">
         <h2>Altenative forum</h2>
         <h1>WELCOME</h1>
+        <h2>Page №<?php echo $page ?></h2>
         <?php foreach($arrMsg as $index => $item): ?>
             <!-- Условие отображения сообщений на странице по пагинации:
              ($index >= $nMsg * $page - $nMsg) - от какого элемента начинается цикл -> 
@@ -163,9 +201,6 @@ print_r($_GET); */
                         <input type="hidden" name = "id" value = <?php echo($index)?>>
                         <button class="saveBtn display-none" type="submit">Save</button>
                     </form>
-
-
-
                     
                 </div>
             <?php endif; ?>
@@ -176,12 +211,43 @@ print_r($_GET); */
             <input class="btn-inp" type="submit" value="Send the message">
         </form>
 
-        <div class="pagination">
+        
+
+        <div class="pagination">            
             <!-- Если количество сообщений больше, чем количество отбражаемых сообщений, то включаем пагинацию -->
             <?php if(count($arrMsg) > $nMsg): ?>
-                <?php for($i = 1; $i <= $page_count; $i++): ?>
-                    <a class="pagination__item" href="?page=<?php echo $i ?>"><?php echo ($i) ?></a>
-                <?php endfor; ?>
+                <a href="?do=prev_page&page=<?php echo $page ?>" class="pagination__arrow"><img class="pagination__arrow-left" src="icons/arrow_left.png" alt=""></a>
+
+                <a class="pagination__item" href="?page=1">1</a>
+                <p class="pagination__paragrapf">...</p>
+
+                <?php if($page_count > 3 && $_GET['page'] != 1 && $_GET['page'] != $page_count): ?>
+                    <?php for($i = ($_GET['page'] - 1); $i <= ($_GET['page'] + 1); $i++): ?>
+                        <a class="pagination__item" href="?page=<?php echo $i ?>"><?php echo ($i) ?></a>
+                    <?php endfor; ?>
+                
+                <?php elseif($page_count > 3 &&  $_GET['page'] == $page_count): ?>
+                    <?php for($i = ($_GET['page'] - 2); $i <= $page_count; $i++): ?>
+                        <a class="pagination__item" href="?page=<?php echo $i ?>"><?php echo ($i) ?></a>
+                    <?php endfor; ?>
+
+                <?php elseif($page_count > 3 && $_GET['page'] == 1) :?>
+                    <?php for($i = 1; $i <= 2; $i++): ?>
+                        <a class="pagination__item" href="?page=<?php echo $i ?>"><?php echo ($i) ?></a>
+                    <?php endfor; ?>
+
+                <?php else: ?>
+                    <?php for($i = 1; $i <= $page_count; $i++): ?>
+                        <a class="pagination__item" href="?page=<?php echo $i ?>"><?php echo ($i) ?></a>
+                    <?php endfor; ?>
+
+                <?php endif; ?>
+                
+                <p class="pagination__paragrapf">...</p>
+                <a class="pagination__item" href="?page=<?php echo $page_count ?>"><?php echo $page_count ?></a>
+
+                <a href="?do=next_page&page=<?php echo $page ?>" class="pagination__arrow"><img class="pagination__arrow-right" src="icons/arrow_right.png" alt=""></a></a>
+
             <?php endif; ?>
         </div>
 
