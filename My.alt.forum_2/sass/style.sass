@@ -1,0 +1,118 @@
+*
+    margin: 0
+    padding: 0
+    box-sizing: border-box
+
+
+body
+    position: relative
+    background-color: #777
+    display: grid
+    height: 100vh
+    grid-template-rows: 10% 85% 5% 
+
+
+.nav
+    width: 100%
+    display: flex
+    flex-direction: column
+    &__header-box
+        background-color: #88e67ece
+        width: 100%
+        padding: 1rem 0
+        h1
+            text-align: center
+            
+            text-decoration: underline
+    &__box
+        position: relative
+        width: 100%
+        display: grid
+        grid-template-columns: 1fr 1fr 1fr
+        padding: 1rem
+        background-color: #5bab52ce
+        border-radius: 0 0 1rem 1rem        
+    &__link
+        text-decoration: none
+    &__themes
+        align-self: flex-start
+    &__sites
+        justify-self: center
+    &__user
+        justify-self: end
+
+.container
+    position: relative
+    width: 60%
+    margin: 0 auto
+
+    display: flex
+    justify-content: center
+
+.form-registration
+    position: relative
+    background-color: #d8d7d7
+    height: 50vh
+    width: 100% 
+    display: flex
+    align-self: center
+    align-items: center
+    justify-content: center 
+    border-radius: 1rem 
+    form
+        display: flex
+        flex-direction: column
+        width: 30%
+        input
+            position: relative
+            outline: none //убираем обводку при клике на input
+            align-self: center
+            height: 2rem
+            width: 100%
+            margin-bottom: 1rem
+            padding-left: 24px
+            border-radius: .25rem
+            border: 1px solid #6c6c6c
+            background-size: 16px
+            background-color: white
+            background-clip: padding-box
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out
+            &:focus
+                box-shadow: 0 0 5px 0.3rem rgba(136, 230, 126, 0.5)
+            &:hover
+                box-shadow: 0 0 5px 0.3rem rgba(136, 230, 126, 0.5)
+            &::placeholder
+                color: #212529
+                opacity: .7
+
+.form-input
+    &__name
+        background: url('../icon/name.png') no-repeat 4px center
+    &__tel
+        background: url('../icon/tel.png') no-repeat 4px center
+        background-size: 15px
+    &__email
+        background: url('../icon/email.png') no-repeat 4px center
+
+.btn
+    width: max-content
+    padding: 3px 4px 
+    align-self: flex-end 
+    border-radius: .25rem
+    color: #212529
+    &:hover
+        box-shadow: 0 0 5px 0.3rem rgba(136, 230, 126, 0.5)
+        transform: scale(102%)
+        transform: translateY(-1px)
+
+
+
+
+
+
+
+
+footer
+    text-align: center
+    width: 100vw
+    background-color: #88e67ece
