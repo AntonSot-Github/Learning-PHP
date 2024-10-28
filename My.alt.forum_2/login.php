@@ -24,7 +24,7 @@
             <form method="post">
                 <input class="form-input form-input__tel" type="tel" name="tel" placeholder="Your telephon number">
                 <input class="form-input form-input__email" type="email" name="email" placeholder="Your email">
-                <button class="btn" type="submit">Registration</button>
+                <button class="btn" type="submit">Login</button>
             </form>
         </div>
     </div>

@@ -1,3 +1,9 @@
+<?php
+
+print_r ($_POST);
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,7 +27,7 @@
 
         <div class="form-registration">
 
-            <form method="post">                
+            <form method="post">
                 <input class="form-input form-input__name" type="name" name="name" placeholder="Your name">                
                 <input class="form-input form-input__tel" type="tel" name="tel" placeholder="Your telephon number">
                 <input class="form-input form-input__email" type="email" name="email" placeholder="Your email">
