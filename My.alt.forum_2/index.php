@@ -1,7 +1,34 @@
 <?php
+session_start();
+require_once __DIR__ . "/incs/db.php";
+require_once __DIR__ . "/incs/functions.php";
 
-print_r ($_POST);
+//dump ($_SERVER);
 
+//registration of new user
+function registration($name, $password, $email){
+    global $db;
+    $expression = mysqli_prepare($db, "INSERT INTO users (name, password, email) VALUES (?, ?, ?)");
+    $res = mysqli_stmt_execute($expression, [$name, $password, $email]);
+}
+
+if($_SERVER['REQUEST_METHOD'] == 'POST'){
+    if (!empty($_POST['name']) && !empty($_POST['password']) && !empty($_POST['email'])){
+        $name = $_POST['name'];
+        $_SESSION['user']['name'] = $name;
+        $password = $_POST['password'];
+        $email = $_POST['email'];
+        registration($name, $password, $email);
+        unset($_POST);
+        $_SESSION['success']['registration'] = 'You have successfully registered';
+
+        } else {
+            $_SESSION['errors']['reg_error'] = 'Enter your nickname, password and email';
+            header("Location: index.php");
+            exit;
+        }
+} 
+//print_r($_SESSION['errors']['reg_error']);
 ?>
 
 <!DOCTYPE html>
@@ -26,10 +53,15 @@ print_r ($_POST);
     <div class="container">
 
         <div class="form-registration">
-
+            <?php if(isset($_SESSION['errors']['reg_error'])): ?>
+                <div class="form-registration__error <?php if($_SESSION['errors']['reg_error']) echo 'width-30%' ?>">
+                    <p><?php echo ($_SESSION['errors']['reg_error']) ?></p>
+                </div>
+                <?php unset($_SESSION['errors']['reg_error']) ?> 
+            <?php endif; ?>
             <form method="post">
                 <input class="form-input form-input__name" type="name" name="name" placeholder="Your name">                
-                <input class="form-input form-input__tel" type="tel" name="tel" placeholder="Your telephon number">
+                <input class="form-input form-input__password" type="password" name="password" placeholder="Your password">
                 <input class="form-input form-input__email" type="email" name="email" placeholder="Your email">
                 <button class="btn" type="submit"><span>Registration</span></button>
             </form>

@@ -62,6 +62,8 @@ function register(array $data): bool
 {
     global $dbh; //обращение к БД
     //Подготавливаем запрос
+    //COUNT(*): возвращает одно число (0 или 1), что минимизирует нагрузку на сервер.
+    //SELECT *: возвращает все данные, связанные с пользователем, что делает запрос более "тяжелым".
     $stmt = $dbh->prepare("SELECT COUNT(*) FROM users WHERE email = ?");
     //выполняем подготовленный запрос
     $stmt->execute([$data['email']]);//$data в [], потому как в функции execute мы должны передать массив
@@ -101,7 +103,7 @@ function login (array $data): bool
         $_SESSION['errors'] = 'Wrong email or password';
         return false;
     }
-    //сохраняем данные пользователя в сессию длядальнейшего использования(кроме пароля)
+    //сохраняем данные пользователя в сессию для дальнейшего использования(кроме пароля)
     foreach ($row as $key => $value){
         if ($key != 'password') {
             $_SESSION['user'][$key] = $value;

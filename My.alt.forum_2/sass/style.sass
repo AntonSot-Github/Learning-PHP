@@ -58,7 +58,18 @@ body
     align-self: center
     align-items: center
     justify-content: center 
-    border-radius: 1rem 
+    border-radius: 1rem
+    transition: all 1s 
+    &__error
+        position: absolute
+        margin-left: 0 auto
+        top: 10%
+        border: 1px solid red 
+        padding: .5rem 1rem
+        border-radius: .25rem 
+        height: max-content
+        width: 0
+        transition: all 1s
     form
         display: flex
         flex-direction: column
@@ -89,7 +100,7 @@ body
 .form-input
     &__name
         background: url('../icon/name.png') no-repeat 4px center
-    &__tel
+    &__password
         background: url('../icon/tel.png') no-repeat 4px center
         background-size: 15px
     &__email
@@ -106,8 +117,8 @@ body
         transform: scale(102%)
         transform: translateY(-1px)
 
-
-
+.width-30%
+    width: 30%
 
 
 
