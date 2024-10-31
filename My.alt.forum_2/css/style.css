@@ -66,14 +66,24 @@ body {
   align-items: center;
   justify-content: center;
   border-radius: 1rem;
+  transition: all 1s;
 }
-.form-registration__error {
+.form-registration__success, .form-registration__error {
   position: absolute;
   margin-left: 0 auto;
   top: 10%;
-  border: 1px solid red;
   padding: 0.5rem 1rem;
   border-radius: 0.25rem;
+  height: -moz-max-content;
+  height: max-content;
+  transition: all 1s;
+  text-align: center;
+}
+.form-registration__success {
+  border: 1px solid green;
+}
+.form-registration__error {
+  border: 1px solid red;
 }
 .form-registration form {
   display: flex;
@@ -134,6 +144,10 @@ body {
   box-shadow: 0 0 5px 0.3rem rgba(136, 230, 126, 0.5);
   transform: scale(102%);
   transform: translateY(-1px);
+}
+
+.width-30 {
+  width: 30%;
 }
 
 footer {

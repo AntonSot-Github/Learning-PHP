@@ -6,7 +6,7 @@ function dump(array | object $data): void
 }
 
 //Проверка формы на наличие всех полей, созданных разработчиками, чтобы избежать подделки от пользователя
-$fillable = ['name', 'email', 'password'];
+$fillable = ['name', 'email', 'password'];//в массиве указываем поля формы, которые ожидаем в $_POST (пользователь может поменять названия полей в HTML) 
 function load (array $fillable, $post = true): array
 {
     // Если $post равно true, то используем $_POST, иначе $_GET
