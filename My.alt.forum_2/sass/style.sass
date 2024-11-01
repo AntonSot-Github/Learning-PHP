@@ -1,14 +1,21 @@
+
+@import "btn.sass"
+
 *
     margin: 0
     padding: 0
     box-sizing: border-box
 
+html
+    max-width: 100vw
+    max-height: 100vh
 
 body
     position: relative
     background-color: #777
     display: grid
     height: 100vh
+    
     grid-template-rows: 10% 85% 5% 
 
 
@@ -16,10 +23,12 @@ body
     width: 100%
     display: flex
     flex-direction: column
+     
     &__header-box
         background-color: #88e67ece
         width: 100%
         padding: 1rem 0
+        
         h1
             text-align: center
             
@@ -31,7 +40,9 @@ body
         grid-template-columns: 1fr 1fr 1fr
         padding: 1rem
         background-color: #5bab52ce
-        border-radius: 0 0 1rem 1rem        
+        border-radius: 0 0 1rem 1rem
+        border-bottom: 2px solid #d8d7d7
+        box-shadow: 0 0 30px rgba(0, 0, 0, 0.7)
     &__link
         text-decoration: none
     &__themes
@@ -60,6 +71,7 @@ body
     justify-content: center 
     border-radius: 1rem
     transition: all 1s
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.7)
     &__success, &__error
         position: absolute
         margin-left: 0 auto
@@ -74,9 +86,11 @@ body
     &__error
         border: 1px solid red
     form
+        position: relative
         display: flex
         flex-direction: column
         width: 30%
+        transition: all .5s 
         input
             position: relative
             outline: none //убираем обводку при клике на input
@@ -109,16 +123,7 @@ body
     &__email
         background: url('../icon/email.png') no-repeat 4px center
 
-.btn
-    width: max-content
-    padding: 3px 4px 
-    align-self: flex-end 
-    border-radius: .25rem
-    color: #212529
-    &:hover
-        box-shadow: 0 0 5px 0.3rem rgba(136, 230, 126, 0.5)
-        transform: scale(102%)
-        transform: translateY(-1px)
+
 
 .width-30
     width: 30% 
@@ -127,6 +132,22 @@ body
 
 
 footer
-    text-align: center
+    position: relative
+    display: flex
+    justify-content: center
+    align-items: center
+    vertical-align: middle
     width: 100vw
+    border-radius: 1rem 1rem 0 0
     background-color: #88e67ece
+    background: linear-gradient(0deg, rgba(64,115,59,1) 0%, rgba(136,230,126,1) 100%)
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.7)
+    border-top: 2px solid #d8d7d7
+
+
+          
+
+
+
+
+        

@@ -1,0 +1,40 @@
+.btn
+    position: relative
+    padding: 5px 7px 
+    align-self: flex-end 
+    border-radius: .25rem
+    letter-spacing: .9px    
+    &::before
+        content: ""
+        bottom: .3rem
+        position: absolute
+        background-color: white
+        height: 1px
+        right: 0
+        width: 0
+        transition: .5s all
+    &:hover::before
+        width: 86%
+        left: .4rem
+        background-color: #0f0d0d
+    &:hover
+        box-shadow: 0 0 5px 0.3rem rgba(136, 230, 126, 0.5)        
+        transform: translateY(-1px)
+   
+
+  
+.btn-grad 
+    background-image: linear-gradient(to right, #8a8989 0%, #88e67ece  70%, #88e67ece  100%)
+
+.btn-grad 
+    text-align: center
+    transition: 0.5s all
+    background-size: 200% auto
+    color: #ffffff
+    display: block
+          
+
+.btn-grad:hover 
+    background-position: right center
+    color: #0f0d0d
+    text-decoration: none

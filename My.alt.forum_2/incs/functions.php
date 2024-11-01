@@ -8,7 +8,7 @@ function dump($data){
 $reqFields = ['name11', 'password2', 'email'];
 function checkField(array $reqFields, $post = true): array
 {
-    $arrData = ($post) ? $_POST : $_GET;    
+    $arrData = ($post) ? $_POST : $_GET;
     $checkedData = [];
     foreach ($reqFields as $field){
         if ($arrData[$field]){

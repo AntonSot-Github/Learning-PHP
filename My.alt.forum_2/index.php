@@ -18,8 +18,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             exit;
         }        
         $_SESSION['user']['name'] = $readyData['name'];
-
-        if (checkNaPa($password)) 
+        
+        if (checkNaPa($readyData['password'])) 
             {
             $password = password_hash($readyData['password'], PASSWORD_DEFAULT);
             } 
@@ -29,7 +29,22 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             exit;
         }
         
-        $email = $readyData['email'];
+        //Chacking email and it's validation        
+/*         $sqlCheckEmail = "SELECT COUNT(*) FROM users WHERE email = ?";
+        $stmt = mysqli_prepare($db, $sqlCheckEmail);
+        $res = mysqli_stmt_execute($stmt, [$readyData['email']]);
+
+        mysqli_stmt_bind_result($stmt, $count);
+        mysqli_stmt_fetch($stmt);
+        if ($count > 0) {
+            $_SESSION['errors']['reg_error'] = 'This email is already registered';
+            header("Location: index.php");
+            exit;
+        } else {
+            $email = $readyData['email'];
+        } */
+
+        $email = $readyData['email'];     
         registration($name, $password, $email);        
         $_SESSION['success']['registration'] = 'You have successfully registered!';
         
@@ -95,7 +110,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 <div>
                     <input class="form-input form-input__email" type="email" name="email" placeholder="Your email">
                 </div>
-                <button class="btn" type="submit"><span>Registration</span></button>
+                <button class="btn btn-grad" type="submit"><span class="btn-span">Registration</span></button>
             </form>
 
         </div>
