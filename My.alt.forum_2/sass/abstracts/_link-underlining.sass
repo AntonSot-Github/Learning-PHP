@@ -1,0 +1,29 @@
+.link-underlining
+    &_left-to-right
+        position: relative
+        &::before
+            content: ""
+            bottom: -0.1rem
+            position: absolute
+            background-color: black
+            height: 1px
+            right: 0
+            width: 0
+            transition: .3s all 
+        &:hover::before
+            width: 100%
+            left: 0
+
+    &_centre-to-sides
+        &::before
+            content: ""
+            position: absolute
+            bottom: -0.4rem
+            background: black
+            height: .2rem
+            width: 100%
+            transform: scaleX(0)
+            transition: .3s
+        &:hover::before
+            transform: scaleX(1)
+

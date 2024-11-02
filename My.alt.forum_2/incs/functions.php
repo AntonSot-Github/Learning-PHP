@@ -1,4 +1,6 @@
 <?php
+require_once __DIR__ . "/../registration.php";
+require_once __DIR__ . "/db.php";
 
 function dump($data){
     echo "<pre>" . print_r($data, 1) . "</pre>";
@@ -32,9 +34,41 @@ function checkNaPa($data): bool
 }
 
 //registration of new user
-function registration($name, $password, $email)
+// function registration($name, $password, $email): bool
+// {
+//     global $db;
+//     $expression = mysqli_prepare($db, "INSERT INTO users (name, password, email) VALUES (?, ?, ?)");
+//     echo $name, ' ', $password, ' ', $email;
+//     if (mysqli_stmt_execute($expression, [$name, $password, $email])){
+//         echo "Registered";
+//         return true;
+//     } else {
+//         echo 'error';
+//         return false;
+//     };
+
+// }
+
+function registration($name, $password, $email): bool
 {
     global $db;
+    // Подготавливаем запрос
     $expression = mysqli_prepare($db, "INSERT INTO users (name, password, email) VALUES (?, ?, ?)");
-    $res = mysqli_stmt_execute($expression, [$name, $password, $email]);
+    if (!$expression) {
+        echo 'Error preparing statement: ' . mysqli_error($db);
+        return false;
+    }
+    
+    // Привязываем параметры
+    mysqli_stmt_bind_param($expression, 'sss', $name, $password, $email); // 'sss' - означает, что все параметры строки
+
+    // Выполняем запрос
+    if (mysqli_stmt_execute($expression)) {
+        echo "Registered";
+        return true;
+    } else {
+        echo 'Error executing statement: ' . mysqli_stmt_error($expression);
+        return false;
+    }
 }
+

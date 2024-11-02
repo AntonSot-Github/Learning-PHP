@@ -1,11 +1,13 @@
-.btn
+.btn, .btn-log
     position: relative
     padding: 5px 7px 
     align-self: flex-end 
     border-radius: .25rem
-    letter-spacing: .9px    
+    letter-spacing: .9px
+    cursor: pointer 
+    color: white
     &::before
-        content: ""
+        content: ""        
         bottom: .3rem
         position: absolute
         background-color: white
@@ -14,15 +16,29 @@
         width: 0
         transition: .5s all
     &:hover::before
-        width: 86%
         left: .4rem
         background-color: #0f0d0d
     &:hover
         box-shadow: 0 0 5px 0.3rem rgba(136, 230, 126, 0.5)        
         transform: translateY(-1px)
-   
 
-  
+.btn
+    &::before
+        right: 0
+    &:hover::before
+        width: 86%
+
+
+.btn-log
+    &::before
+        right: 0
+        height: .5px
+    &:hover::before
+        width: 75%
+
+
+
+
 .btn-grad 
     background-image: linear-gradient(to right, #8a8989 0%, #88e67ece  70%, #88e67ece  100%)
 
