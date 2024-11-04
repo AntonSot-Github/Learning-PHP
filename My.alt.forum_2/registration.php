@@ -1,6 +1,5 @@
 <?php
-session_start();
-require_once __DIR__ . "/incs/db.php";
+
 require_once __DIR__ . "/incs/functions.php";
 
 //dump ($_SERVER);
@@ -18,6 +17,15 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             exit;
         }        
         $_SESSION['user_name'] = $readyData['name'];
+        if (isset($name)){
+            $sqlCheckName = mysqli_query($db, "SELECT * FROM `users` WHERE name = '$name'");
+            if(mysqli_num_rows($sqlCheckName) !== 0){
+                $_SESSION['user_name'] = $name;
+                $_SESSION['errors'] = 'This name is already uses';
+                header("Location: registration.php");
+                exit;
+            }
+        }
         
         if (checkNaPa($readyData['password'])) 
             {
@@ -54,8 +62,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         }
 
 
-        registration($name, $password, $email);        
-        $_SESSION['success']['registration'] = 'You have successfully registered!';
+        registration($name, $password, $email);
+        
         } else {
             $_SESSION['errors'] = 'Please, enter your nickname, password and email correctly';
             header("Location: registration.php");
@@ -71,17 +79,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
         <div class="form-registration">
 
-            <!-- Message about success with registration  -->
-            <?php if(isset($_SESSION['success']['registration'])): ?>
-                <div class="form-registration__success <?php if($_SESSION['success']['registration']) echo 'width-30' ?>">
-                    <p><?php echo ($_SESSION['success']['registration']) ?></p>
-                </div>
-                <?php unset($_SESSION['success']['registration']) ?> 
-            <?php endif; ?>
-
             <!-- Message about error with registration -->
             <?php if(isset($_SESSION['errors'])): ?>
-                <div class="form-registration__error <?php if($_SESSION['errors']) echo 'width-30' ?>">
+                <div class="form-registration__error">
                     <p><?php echo ($_SESSION['errors']) ?></p>
                 </div>
                 <?php unset($_SESSION['errors']) ?> 
@@ -90,6 +90,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             <!-- Form for registration -->
             <form method="post">
 
+                
                 <div>
                     <input class="form-input form-input__name" type="name" name="name" placeholder="Your name"
                      value = "<?php if (isset($_SESSION['user_name'])){

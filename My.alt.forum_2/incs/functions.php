@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . "/../registration.php";
+session_start();
 require_once __DIR__ . "/db.php";
 
 function dump($data){
@@ -7,7 +7,7 @@ function dump($data){
 }
 
 //Checking fields of form
-$reqFields = ['name11', 'password2', 'email'];
+$reqFields = ['name', 'password', 'email'];
 function checkField(array $reqFields, $post = true): array
 {
     $arrData = ($post) ? $_POST : $_GET;
@@ -34,41 +34,42 @@ function checkNaPa($data): bool
 }
 
 //registration of new user
-// function registration($name, $password, $email): bool
-// {
-//     global $db;
-//     $expression = mysqli_prepare($db, "INSERT INTO users (name, password, email) VALUES (?, ?, ?)");
-//     echo $name, ' ', $password, ' ', $email;
-//     if (mysqli_stmt_execute($expression, [$name, $password, $email])){
-//         echo "Registered";
-//         return true;
-//     } else {
-//         echo 'error';
-//         return false;
-//     };
+ function registration($name, $password, $email): bool
+ {
+     global $db;
+     $expression = mysqli_prepare($db, "INSERT INTO users (name, password, email) VALUES (?, ?, ?)");
 
-// }
-
-function registration($name, $password, $email): bool
-{
-    global $db;
-    // Подготавливаем запрос
-    $expression = mysqli_prepare($db, "INSERT INTO users (name, password, email) VALUES (?, ?, ?)");
-    if (!$expression) {
-        echo 'Error preparing statement: ' . mysqli_error($db);
-        return false;
-    }
-    
-    // Привязываем параметры
-    mysqli_stmt_bind_param($expression, 'sss', $name, $password, $email); // 'sss' - означает, что все параметры строки
-
-    // Выполняем запрос
-    if (mysqli_stmt_execute($expression)) {
-        echo "Registered";
+     if (mysqli_stmt_execute($expression, [$name, $password, $email])){
+        $_SESSION['success_reg'] = 'You have successfully registered!';
+        header("Location: login.php");
         return true;
-    } else {
-        echo 'Error executing statement: ' . mysqli_stmt_error($expression);
+     } else {
         return false;
+     };
+
+ }
+
+//Autorization
+function login($name, $logPass)
+{
+    global $db;    
+    // Подготавливаем SQL-запрос для выбора пользователя по имени
+    $stmt = mysqli_prepare($db, "SELECT * FROM `users` WHERE name = ?");
+    mysqli_stmt_bind_param($stmt, "s", $name);
+    mysqli_execute($stmt);
+    $res = mysqli_stmt_get_result($stmt);
+
+    // Извлекаем данные пользователя
+    $user = mysqli_fetch_assoc($res);
+
+    // Проверяем пароль
+    if (!password_verify($logPass, $user['password'])){
+        $_SESSION['error_log'] = 'uncorrect name or password';
+        return false;
+    } else {
+        $_SESSION['success_reg'] = 'oki';
+        return true;
     }
+
 }
 

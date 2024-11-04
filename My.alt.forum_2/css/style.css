@@ -146,13 +146,13 @@ body {
 
 .container {
   position: relative;
-  width: 60%;
+  width: 50%;
   margin: 0 auto;
   display: flex;
   justify-content: center;
 }
 
-.form-registration {
+.form-registration, .form-login {
   position: relative;
   background-color: #d8d7d7;
   height: 50vh;
@@ -166,7 +166,7 @@ body {
   transition: all 1s;
   box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
 }
-.form-registration__success, .form-registration__error {
+.form-registration__success, .form-registration__error, .form-registration__question, .form-login__success, .form-login__error, .form-login__question {
   position: absolute;
   margin-left: 0 auto;
   top: 10%;
@@ -176,24 +176,25 @@ body {
   height: max-content;
   transition: all 1s;
   text-align: center;
+  width: 30%;
 }
-.form-registration__success {
+.form-registration__success, .form-registration__error, .form-login__success, .form-login__error {
   border: 1px solid green;
 }
-.form-registration__error {
+.form-registration__error, .form-login__error {
   border: 1px solid red;
 }
-.form-registration p {
+.form-registration__question, .form-login__question {
   margin-bottom: 1rem;
 }
-.form-registration form {
+.form-registration form, .form-login form {
   position: relative;
   display: flex;
   flex-direction: column;
-  width: 30%;
+  width: 35%;
   transition: all 0.5s;
 }
-.form-registration form input {
+.form-registration form input, .form-login form input {
   position: relative;
   outline: none;
   align-self: center;
@@ -208,35 +209,35 @@ body {
   background-clip: padding-box;
   transition: all 0.3s ease-in-out;
 }
-.form-registration form input:focus {
+.form-registration form input:focus, .form-login form input:focus {
   box-shadow: 0 0 5px 0.3rem rgba(136, 230, 126, 0.5);
   border: 1px solid #000000;
 }
-.form-registration form input:hover {
+.form-registration form input:hover, .form-login form input:hover {
   box-shadow: 0 0 5px 0.3rem rgba(136, 230, 126, 0.5);
 }
-.form-registration form input::-moz-placeholder {
+.form-registration form input::-moz-placeholder, .form-login form input::-moz-placeholder {
   color: #212529;
   opacity: 0.7;
 }
-.form-registration form input::placeholder {
+.form-registration form input::placeholder, .form-login form input::placeholder {
   color: #212529;
   opacity: 0.7;
+}
+
+.form-login {
+  padding-top: 4.5%;
 }
 
 .form-input__name {
   background: url("../icon/name.png") no-repeat 4px center;
 }
 .form-input__password {
-  background: url("../icon/password.png") no-repeat 4px center;
+  background: url("../icon/password.png") no-repeat 6.5px center;
   background-size: 14px !important;
 }
 .form-input__email {
   background: url("../icon/email.png") no-repeat 4px center;
-}
-
-.width-30 {
-  width: 30%;
 }
 
 .link {

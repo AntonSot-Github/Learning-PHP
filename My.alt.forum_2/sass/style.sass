@@ -22,13 +22,13 @@ body
 
 .container
     position: relative
-    width: 60%
+    width: 50%
     margin: 0 auto
 
     display: flex
     justify-content: center
 
-.form-registration
+.form-registration, .form-login
     position: relative
     background-color: #d8d7d7
     height: 50vh
@@ -41,7 +41,7 @@ body
     border-radius: 1rem
     transition: all 1s
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.7)
-    &__success, &__error
+    &__success, &__error, &__question
         position: absolute
         margin-left: 0 auto
         top: 10%
@@ -50,17 +50,18 @@ body
         height: max-content
         transition: all 1s
         text-align: center
-    &__success
+        width: 30%
+    &__success,&__error
         border: 1px solid green
     &__error
         border: 1px solid red
-    p
+    &__question
         margin-bottom: 1rem
     form
         position: relative
         display: flex
         flex-direction: column
-        width: 30%
+        width: 35%
         transition: all .5s         
         input
             position: relative
@@ -85,19 +86,19 @@ body
                 color: #212529
                 opacity: .7
 
+.form-login
+    padding-top: 4.5%
+
 .form-input
     &__name
         background: url('../icon/name.png') no-repeat 4px center
     &__password
-        background: url('../icon/password.png') no-repeat 4px center
+        background: url('../icon/password.png') no-repeat 6.5px center
         background-size: 14px !important
     &__email
         background: url('../icon/email.png') no-repeat 4px center
 
 
-
-.width-30
-    width: 30% 
 
 .link
     position: relative
