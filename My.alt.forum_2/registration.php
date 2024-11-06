@@ -2,6 +2,13 @@
 
 require_once __DIR__ . "/incs/functions.php";
 
+$title = 'registration';
+
+if(isset($_SESSION['user'])){
+    header("Location: index.php");
+    exit;
+}
+
 //dump ($_SERVER);
 
 

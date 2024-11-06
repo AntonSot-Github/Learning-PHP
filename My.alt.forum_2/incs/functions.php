@@ -50,7 +50,7 @@ function checkNaPa($data): bool
  }
 
 //Autorization
-function login($name, $logPass)
+function login($name, $logPass): bool 
 {
     global $db;    
     // Подготавливаем SQL-запрос для выбора пользователя по имени
@@ -60,16 +60,16 @@ function login($name, $logPass)
     $res = mysqli_stmt_get_result($stmt);
 
     // Извлекаем данные пользователя
-    $user = mysqli_fetch_assoc($res);
+    $user = mysqli_fetch_assoc($res);    
 
     // Проверяем пароль
     if (!password_verify($logPass, $user['password'])){
-        $_SESSION['error_log'] = 'uncorrect name or password';
+        
         return false;
     } else {
-        $_SESSION['success_reg'] = 'oki';
+        $_SESSION['user'] = $user['name'];
+        echo $_SESSION['user'];
         return true;
     }
-
 }
 

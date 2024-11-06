@@ -1,9 +1,16 @@
+<?php
+    require_once __DIR__ . "/../incs/functions.php";
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alternative forum 2</title>
+    <title>
+        Alternative forum 2 <?php if(isset($title)) echo ': ' . "$title" ?>
+    </title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -13,6 +20,26 @@
         </div>
         <div class="nav__box">
             <a href="#" class="link nav__link nav__themes">Themes for conversations</a>
-            <a href="./login.php" class="link nav__link nav__user">Login on site</a>
+
+            <div class="dropdown nav__user">
+
+                <a 
+                href="<?php if(!isset($_SESSION['user'])){ echo './login.php';} else {echo '#';}?>" 
+                class="link dropbtn <?php if(isset($_SESSION['user'])){echo 'btn-user-menu';}?>">
+                    <?php if(isset($_SESSION['user'])): ?>
+                        <?php echo 'Hello, ' . "{$_SESSION['user']}"; ?><span></span>
+                    <?php else : ?>
+                        Login on site
+                    <?php endif; ?>
+                </a>
+                        
+                <div class="dropdown-content">
+                    <a class="dropdown-content__a" href="#">Relogin</a>
+                    <a class="dropdown-content__a" href="#">Your account</a>
+                    <a class="dropdown-content__a" href="#">Logout</a>
+                </div>
+
+            </div>
+
         </div>
     </div>

@@ -1,7 +1,15 @@
+<?php
+    require_once __DIR__ . "/incs/functions.php";
+    
+?>
+
+
+
+
 <?php require_once __DIR__ . "/views/header.php" ?>
 
     <div class="container">
-
+        
 
     </div>
 

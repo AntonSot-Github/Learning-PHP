@@ -1,12 +1,26 @@
 <?php 
 require_once __DIR__ . "/incs/functions.php";
 
+$title = 'autorization';
+
+if(isset($_SESSION['user'])){
+    header("Location: index.php");
+    exit;
+}
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     if (!empty($_POST['name']) && !empty($_POST['password'])){
         $name = $_POST['name'];
         $logPass = trim($_POST['password']);
-        login($name, $logPass);
-
+        //login($name, $logPass);
+        if (login($name, $logPass)){
+            header("Location: index.php");
+            exit;
+        } else {
+            $_SESSION['error_log'] = 'uncorrect name or password';
+            header("Location: login.php");
+            exit;
+        }
     }
 }
 

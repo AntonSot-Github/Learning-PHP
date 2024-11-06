@@ -78,7 +78,7 @@
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  padding: 1rem 2rem;
+  padding: 1rem 2.5rem;
   background-color: rgba(91, 171, 82, 0.8078431373);
   border-radius: 0 0 1rem 1rem;
   border-bottom: 2px solid #d8d7d7;
@@ -92,6 +92,43 @@
 }
 .nav__user {
   justify-self: end;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.dropdown:hover .dropdown-content {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.dropbtn {
+  display: block;
+  position: relative;
+}
+.dropbtn span {
+  position: relative;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+.dropdown-content__a {
+  color: black;
+  padding: 1.2rem 1.6rem;
+  text-decoration: none;
+  display: block;
+}
+.dropdown-content__a:hover {
+  background-color: #ddd;
 }
 
 .link-underlining_left-to-right {
@@ -123,33 +160,6 @@
 }
 .link-underlining_centre-to-sides:hover::before {
   transform: scaleX(1);
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-html {
-  max-width: 100vw;
-  max-height: 100vh;
-}
-
-body {
-  position: relative;
-  background-color: #777;
-  display: grid;
-  height: 100vh;
-  grid-template-rows: 10% 85% 5%;
-}
-
-.container {
-  position: relative;
-  width: 50%;
-  margin: 0 auto;
-  display: flex;
-  justify-content: center;
 }
 
 .form-registration, .form-login {
@@ -238,6 +248,33 @@ body {
 }
 .form-input__email {
   background: url("../icon/email.png") no-repeat 4px center;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  max-width: 100vw;
+  max-height: 100vh;
+}
+
+body {
+  position: relative;
+  background-color: #777;
+  display: grid;
+  height: 100vh;
+  grid-template-rows: 10% 85% 5%;
+}
+
+.container {
+  position: relative;
+  width: 50%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
 }
 
 .link {

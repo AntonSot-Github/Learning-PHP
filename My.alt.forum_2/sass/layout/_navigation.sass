@@ -16,7 +16,7 @@
         width: 100%
         display: grid
         grid-template-columns: 1fr 1fr
-        padding: 1rem 2rem
+        padding: 1rem 2.5rem
         background-color: #5bab52ce
         border-radius: 0 0 1rem 1rem
         border-bottom: 2px solid #d8d7d7
@@ -27,3 +27,40 @@
         justify-self: center
     &__user
         justify-self: end
+
+.dropdown
+    position: relative
+    display: inline-block
+    transition: opacity 0.3s ease, transform 0.3s ease
+    &:hover .dropdown-content
+        display: block
+        opacity: 1
+        transform: translateY(0)
+
+.dropbtn
+    display: block
+    position: relative
+    span
+        position: relative
+        
+
+
+
+
+.dropdown-content
+    display: none
+    position: absolute
+    background-color: #f1f1f1
+    min-width: 160px
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2)
+    z-index: 1
+    &__a
+        color: black
+        padding: 1.2rem 1.6rem
+        text-decoration: none
+        display: block
+        &:hover
+            background-color: #ddd
+
+
+
