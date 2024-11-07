@@ -48,6 +48,9 @@
             background-color: white
             background-clip: padding-box
             transition: all 0.3s ease-in-out
+            &:autofill
+                background-color: transparent !important
+                box-shadow: 0 0 0px 1000px white inset
             &:focus
                 box-shadow: 0 0 5px 0.3rem rgba(136, 230, 126, 0.5)
                 border: 1px solid #000000 //в фокусе border становится черным
@@ -66,5 +69,6 @@
     &__password
         background: url('../icon/password.png') no-repeat 6.5px center
         background-size: 14px !important
+
     &__email
         background: url('../icon/email.png') no-repeat 4px center

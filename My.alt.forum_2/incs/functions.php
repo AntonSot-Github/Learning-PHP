@@ -2,6 +2,10 @@
 session_start();
 require_once __DIR__ . "/db.php";
 
+if(isset($_SESSION['user'])){
+    $user = $_SESSION['user'];
+}
+
 function dump($data){
     echo "<pre>" . print_r($data, 1) . "</pre>";
 }
@@ -63,13 +67,11 @@ function login($name, $logPass): bool
     $user = mysqli_fetch_assoc($res);    
 
     // Проверяем пароль
-    if (!password_verify($logPass, $user['password'])){
-        
-        return false;
-    } else {
+    if ($user && password_verify($logPass, $user['password'])){
         $_SESSION['user'] = $user['name'];
-        echo $_SESSION['user'];
         return true;
+    } else {
+        return false;
     }
 }
 

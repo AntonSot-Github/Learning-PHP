@@ -1,6 +1,17 @@
 <?php
     require_once __DIR__ . "/../incs/functions.php";
 
+    if (isset($_GET['do']) && $_GET['do'] == 'logout'){
+        unset($_SESSION['user']);
+        header("Location: index.php");
+        exit;
+    }
+
+    if(isset($_GET['do']) && $_GET['do'] == 'relogin'){
+        unset($_SESSION['user']);
+        header("Location: login.php");
+        exit;
+    }
 ?>
 
 <!DOCTYPE html>
@@ -16,10 +27,10 @@
 <body>
     <div class="nav">
         <div class="nav__header-box">
-            <h1>Alternative forum - Version 2</h1>
+            <a class="link" href="index.php"><h1>Alternative forum - Version 2</h1></a>
         </div>
         <div class="nav__box">
-            <a href="#" class="link nav__link nav__themes">Themes for conversations</a>
+            <a href="#" class="link nav__link nav__themes">Topics for conversations</a>
 
             <div class="dropdown nav__user">
 
@@ -27,18 +38,19 @@
                 href="<?php if(!isset($_SESSION['user'])){ echo './login.php';} else {echo '#';}?>" 
                 class="link dropbtn <?php if(isset($_SESSION['user'])){echo 'btn-user-menu';}?>">
                     <?php if(isset($_SESSION['user'])): ?>
-                        <?php echo 'Hello, ' . "{$_SESSION['user']}"; ?><span></span>
+                        <?php echo 'Hello, ' . "$user"; ?><span></span>
                     <?php else : ?>
                         Login on site
                     <?php endif; ?>
                 </a>
-                        
-                <div class="dropdown-content">
-                    <a class="dropdown-content__a" href="#">Relogin</a>
-                    <a class="dropdown-content__a" href="#">Your account</a>
-                    <a class="dropdown-content__a" href="#">Logout</a>
-                </div>
-
+                    
+                <?php if(isset($_SESSION['user'])): ?>
+                    <div class="dropdown-content">
+                        <a class="dropdown-content__a" href="?do=relogin">Relogin</a>
+                        <a class="dropdown-content__a" href="#">Your account</a>
+                        <a class="dropdown-content__a" href="?do=logout">Logout</a>
+                    </div>
+                <?php endif; ?>
             </div>
 
         </div>

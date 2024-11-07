@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
             header("Location: index.php");
             exit;
         } else {
-            $_SESSION['error_log'] = 'uncorrect name or password';
+            $_SESSION['error_log'] = 'Uncorrect name or password';
             header("Location: login.php");
             exit;
         }
@@ -57,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
             
             <form method="post">
                 <div>
-                    <input class="form-input form-input__name" type="name" name="name" placeholder="Your name"
+                    <input autocomplete="off" class="form-input form-input__name" type="name" name="name" placeholder="Your name"
                      value = "<?php if (isset($_SESSION['user_name'])){
                         echo ($_SESSION['user_name']);
                         unset($_SESSION['user_name']);

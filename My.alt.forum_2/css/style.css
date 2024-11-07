@@ -41,6 +41,16 @@
   width: 75%;
 }
 
+.btn-msg {
+  border-radius: 0.4rem;
+}
+.btn-msg::before {
+  right: 0;
+}
+.btn-msg:hover::before {
+  width: 95%;
+}
+
 .btn-grad {
   background-image: linear-gradient(to right, #8a8989 0%, rgba(136, 230, 126, 0.8078431373) 70%, rgba(136, 230, 126, 0.8078431373) 100%);
 }
@@ -117,6 +127,7 @@
   display: none;
   position: absolute;
   background-color: #f1f1f1;
+  right: -1.5rem;
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
@@ -128,7 +139,7 @@
   display: block;
 }
 .dropdown-content__a:hover {
-  background-color: #ddd;
+  background-color: rgba(91, 171, 82, 0.8078431373);
 }
 
 .link-underlining_left-to-right {
@@ -219,6 +230,14 @@
   background-clip: padding-box;
   transition: all 0.3s ease-in-out;
 }
+.form-registration form input:-webkit-autofill, .form-login form input:-webkit-autofill {
+  background-color: transparent !important;
+  box-shadow: 0 0 0px 1000px white inset;
+}
+.form-registration form input:autofill, .form-login form input:autofill {
+  background-color: transparent !important;
+  box-shadow: 0 0 0px 1000px white inset;
+}
 .form-registration form input:focus, .form-login form input:focus {
   box-shadow: 0 0 5px 0.3rem rgba(136, 230, 126, 0.5);
   border: 1px solid #000000;
@@ -290,6 +309,40 @@ body {
   text-shadow: 0px 0px 4px #33bc24;
 }
 
+.msg {
+  align-self: center;
+  display: flex;
+  justify-content: center;
+  padding: 1rem 2rem;
+  flex-direction: column;
+  width: 50%;
+  background-color: #d8d7d7;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
+  height: -moz-min-content;
+  height: min-content;
+  border-radius: 1rem;
+}
+.msg p {
+  margin-bottom: 1rem;
+}
+
+.topic {
+  align-self: center;
+  display: flex;
+  justify-content: center;
+  padding: 1rem 2rem;
+  flex-direction: column;
+  width: 50%;
+  background-color: #d8d7d7;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
+  height: -moz-min-content;
+  height: min-content;
+  border-radius: 1rem;
+}
+.topic p {
+  margin-bottom: 1rem;
+}
+
 footer {
   position: relative;
   display: flex;
@@ -302,4 +355,12 @@ footer {
   background: linear-gradient(0deg, rgb(64, 115, 59) 0%, rgb(136, 230, 126) 100%);
   box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
   border-top: 2px solid #d8d7d7;
+}
+
+.no-display {
+  display: none;
+}
+
+.display {
+  display: block;
 }/*# sourceMappingURL=style.css.map */

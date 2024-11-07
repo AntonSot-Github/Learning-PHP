@@ -99,7 +99,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
                 
                 <div>
-                    <input class="form-input form-input__name" type="name" name="name" placeholder="Your name"
+                    <input autocomplete="off" class="form-input form-input__name" type="name" name="name" placeholder="Your name"
                      value = "<?php if (isset($_SESSION['user_name'])){
                         echo ($_SESSION['user_name']);
                         unset($_SESSION['user_name']);
@@ -111,7 +111,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 </div>
 
                 <div>
-                    <input class="form-input form-input__email" type="email" name="email" placeholder="Your email"
+                    <input autocomplete="off" class="form-input form-input__email" type="email" name="email" placeholder="Your email"
                     value = "<?php if(isset($_SESSION['user_email'])){
                         echo $_SESSION['user_email'];
                         unset($_SESSION['user_email']);
