@@ -3,7 +3,7 @@ session_start();
 require_once __DIR__ . "/db.php";
 
 if(isset($_SESSION['user'])){
-    $user = $_SESSION['user'];
+    $userName = $_SESSION['user'];
 }
 
 function dump($data){
@@ -69,9 +69,37 @@ function login($name, $logPass): bool
     // Проверяем пароль
     if ($user && password_verify($logPass, $user['password'])){
         $_SESSION['user'] = $user['name'];
+        $_SESSION['user_id'] = $user['user_id'];
         return true;
     } else {
         return false;
     }
 }
 
+//Topic add
+function createTopic($userId, $topicName): bool
+{
+    global $db;
+    $stmt = mysqli_prepare($db, "INSERT INTO `topics` (by_user_id, topic_name) VALUES (?, ?)");
+    mysqli_stmt_bind_param($stmt, "is", $userId, $topicName);
+     
+    if (mysqli_stmt_execute($stmt)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+
+/* 
+Array
+(
+    [user_id] => 48
+    [name] => Garrett Grant
+    [tel] => 
+    [password] => $2y$10$emfsoX2L2UqSHdRBD9/aK.RhR7hbdCSPLQouBYs/wwql6d9rn7QGu
+    [email] => xefaneba@mailinator.com
+    [role] => 2
+    [reg_time_at] => 2024-11-04 19:19:42
+)
+*/

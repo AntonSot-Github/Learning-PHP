@@ -72,6 +72,10 @@
   text-decoration: none;
 }
 
+.btn-topic {
+  align-self: flex-end;
+}
+
 .nav {
   width: 100%;
   display: flex;
@@ -176,7 +180,7 @@
   transform: scaleX(1);
 }
 
-.form-registration, .form-login {
+.form-registration, .form-login, .form-topic {
   position: relative;
   background-color: #d8d7d7;
   height: 50vh;
@@ -190,7 +194,7 @@
   transition: all 1s;
   box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
 }
-.form-registration__success, .form-registration__error, .form-registration__question, .form-login__success, .form-login__error, .form-login__question {
+.form-registration__success, .form-registration__error, .form-registration__question, .form-login__success, .form-login__error, .form-login__question, .form-topic__success, .form-topic__error, .form-topic__question {
   position: absolute;
   margin-left: 0 auto;
   top: 10%;
@@ -202,23 +206,67 @@
   text-align: center;
   width: 30%;
 }
-.form-registration__success, .form-registration__error, .form-login__success, .form-login__error {
+.form-registration__success, .form-registration__error, .form-login__success, .form-login__error, .form-topic__success, .form-topic__error {
   border: 1px solid green;
 }
-.form-registration__error, .form-login__error {
+.form-registration__error, .form-login__error, .form-topic__error {
   border: 1px solid red;
 }
-.form-registration__question, .form-login__question {
+.form-registration__question, .form-login__question, .form-topic__question {
   margin-bottom: 1rem;
 }
-.form-registration form, .form-login form {
+.form-registration form, .form-login form, .form-topic form {
   position: relative;
   display: flex;
   flex-direction: column;
   width: 35%;
   transition: all 0.5s;
 }
-.form-registration form input, .form-login form input {
+
+.form-login {
+  padding-top: 4.5%;
+}
+
+.form-topic {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+}
+.form-topic p {
+  text-align: center;
+  position: absolute;
+  left: 50%;
+  top: 40%;
+  transform: translate(-50%, 50%);
+}
+.form-topic__box {
+  width: 80%;
+  margin: 0 auto;
+}
+.form-topic__box form {
+  height: -moz-max-content;
+  height: max-content;
+  width: 100%;
+}
+.form-topic__box label {
+  padding-left: 1.5rem;
+}
+.form-topic__box textarea {
+  margin-top: 0.3rem;
+  padding: 0.2rem;
+  height: 7rem;
+  white-space: pre-wrap;
+  margin-bottom: 1rem;
+}
+.form-topic__box textarea::-moz-placeholder {
+  padding-left: 1.3rem;
+}
+.form-topic__box textarea::placeholder {
+  padding-left: 1.3rem;
+}
+
+.form-input {
   position: relative;
   outline: none;
   align-self: center;
@@ -228,48 +276,43 @@
   padding-left: 24px;
   border-radius: 0.25rem;
   border: 1px solid #c5c2c2;
-  background-size: 16px;
-  background-color: white;
-  background-clip: padding-box;
   transition: all 0.3s ease-in-out;
 }
-.form-registration form input:-webkit-autofill, .form-login form input:-webkit-autofill {
-  background-color: transparent !important;
-  box-shadow: 0 0 0px 1000px white inset;
-}
-.form-registration form input:autofill, .form-login form input:autofill {
-  background-color: transparent !important;
-  box-shadow: 0 0 0px 1000px white inset;
-}
-.form-registration form input:focus, .form-login form input:focus {
+.form-input:focus {
   box-shadow: 0 0 5px 0.3rem rgba(136, 230, 126, 0.5);
   border: 1px solid #000000;
 }
-.form-registration form input:hover, .form-login form input:hover {
+.form-input:hover {
   box-shadow: 0 0 5px 0.3rem rgba(136, 230, 126, 0.5);
 }
-.form-registration form input::-moz-placeholder, .form-login form input::-moz-placeholder {
+.form-input::-moz-placeholder {
   color: #212529;
   opacity: 0.7;
 }
-.form-registration form input::placeholder, .form-login form input::placeholder {
+.form-input::placeholder {
   color: #212529;
   opacity: 0.7;
 }
-
-.form-login {
-  padding-top: 4.5%;
-}
-
 .form-input__name {
   background: url("../icon/name.png") no-repeat 4px center;
+  background-color: white;
+  background-size: 16px;
 }
 .form-input__password {
-  background: url("../icon/password.png") no-repeat 6.5px center;
+  background: url("../icon/password.png") no-repeat 6px center;
   background-size: 14px !important;
+  background-color: white;
 }
 .form-input__email {
   background: url("../icon/email.png") no-repeat 4px center;
+  background-color: white;
+  background-size: 16px;
+}
+.form-input__topic {
+  align-self: flex-start;
+  width: 60%;
+  padding-left: 1.5rem;
+  margin-top: 0.3rem;
 }
 
 * {
@@ -312,7 +355,7 @@ body {
   text-shadow: 0px 0px 4px #33bc24;
 }
 
-.msg, .topic {
+.msg {
   align-self: center;
   display: flex;
   text-align: center;

@@ -38,7 +38,7 @@
                 href="<?php if(!isset($_SESSION['user'])){ echo './login.php';} else {echo '#';}?>" 
                 class="link dropbtn <?php if(isset($_SESSION['user'])){echo 'btn-user-menu';}?>">
                     <?php if(isset($_SESSION['user'])): ?>
-                        <?php echo 'Hello, ' . "$user"; ?><span></span>
+                        <?php echo 'Hello, ' . "$userName"; ?><span></span>
                     <?php else : ?>
                         Login on site
                     <?php endif; ?>
