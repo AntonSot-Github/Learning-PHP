@@ -8,7 +8,10 @@
 
     if($_SERVER['REQUEST_METHOD'] == 'POST'){
         if(isset($_POST['topicName']) && !empty($_POST['topicName'])){
-            createTopic($_SESSION['user_id'], $_POST['topicName']);
+            $topicName = htmlspecialchars(trim($_POST['topicName']));
+            createTopic($_SESSION['user_id'], $topicName);
+            header("Location: index.php");
+            exit;
         }
     }
 ?>
@@ -32,16 +35,15 @@
 
             <?php if(isset($_SESSION['user'])): ?>
                 <div class="form-topic__box">
+                    
                     <form method="post" >
-                        
-                        <label for="topicName">You can create a new topic</label>
-                        <input class="form-input form-input__topic" type="text" name="topicName" id="topicName" placeholder="Name of topic">                        
-                        <label for="postMsg">Your message</label>
-                        <textarea name="postMsg" id="postMsg" placeholder="Message here"></textarea>
+                        <input autocomplete="off" class="form-input form-input__topic" type="text" name="topicName" id="topicName" placeholder="Name of topic">
+
                         <button class="btn btn-grad btn-topic" type="submit">Create topic</button>
                     </form>
                 </div>
-
+                        <!-- <label for="postMsg">Your message</label>
+                        <textarea name="postMsg" id="postMsg" placeholder="Message here"></textarea> -->
             <?php else: ?>
                     <p>Only autorized users can create new topics. Please log in to our website
                         <em><a class="link link-underlining_left-to-right link__reg" href="login.php">Login</a></em>

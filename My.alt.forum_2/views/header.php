@@ -12,6 +12,15 @@
         header("Location: login.php");
         exit;
     }
+
+    if($db) {
+        $mysqlTopic = mysqli_prepare($db, "SELECT topic_name FROM topics");   
+        mysqli_execute($mysqlTopic);
+        $resTopic = mysqli_stmt_get_result($mysqlTopic);
+        $topics = array_column(mysqli_fetch_all($resTopic, MYSQLI_ASSOC), 'topic_name');
+        dump($topics);
+    }
+
 ?>
 
 <!DOCTYPE html>
@@ -30,7 +39,11 @@
             <a class="link" href="index.php"><h1>Alternative forum - Version 2</h1></a>
         </div>
         <div class="nav__box">
-            <a href="#" class="link nav__link nav__themes">Topics for conversations</a>
+            
+            <div class="nav__topics">
+                <a href="#" class="link nav__link nav__themes">Topics for conversations</a>
+            </div>
+            
 
             <div class="dropdown nav__user">
 
