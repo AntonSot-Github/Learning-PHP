@@ -14,12 +14,13 @@
     }
 
     if($db) {
-        $mysqlTopic = mysqli_prepare($db, "SELECT topic_name FROM topics");   
+        $mysqlTopic = mysqli_prepare($db, "SELECT  topic_name, id FROM topics");   
         mysqli_execute($mysqlTopic);
         $resTopic = mysqli_stmt_get_result($mysqlTopic);
-        $topics = array_column(mysqli_fetch_all($resTopic, MYSQLI_ASSOC), 'topic_name');
-        dump($topics);
+        $topics = array_column(mysqli_fetch_all($resTopic, MYSQLI_ASSOC), 'topic_name', 'id');
+        //dump($topics);
     }
+
 
 ?>
 
@@ -41,7 +42,16 @@
         <div class="nav__box">
             
             <div class="nav__topics">
-                <a href="#" class="link nav__link nav__themes">Topics for conversations</a>
+                <a href="#" class="link nav__link nav__themes nav__topics-link">Topics for conversations</a>
+                <?php if (!empty($topics)): ?>
+
+                    <ul class="nav__topics-box">
+                        <?php foreach($topics as $topic): ?>
+                            <?php echo '<li><a href="#">'. $topic . '</a></li>' ?>
+                        <?php endforeach; ?>
+                    </ul>
+
+                <?php endif; ?>
             </div>
             
 

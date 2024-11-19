@@ -2,6 +2,7 @@
 session_start();
 require_once __DIR__ . "/db.php";
 
+
 if(isset($_SESSION['user'])){
     $userName = $_SESSION['user'];
 }
@@ -90,6 +91,28 @@ function createTopic($userId, $topicName): bool
     }
 }
 
+//Topic Id from DB
+function findId($topics, $topicName){
+    foreach ($topics as $index => $topic){
+        if($topic == $topicName){
+            return $index;
+        }
+    }
+};
+
+
+//Post-text add
+function publicPost($topicId, $postText): bool 
+{
+    global $db;
+    $stmt = mysqli_prepare($db, "INSERT INTO `posts` (by_user_id, from_topic_id, post_text) VALUES (?, ?, ?)");
+    mysqli_stmt_bind_param($stmt, "iis", $_SESSION['user_id'], $topicId, $postText);
+    if(mysqli_stmt_execute($stmt)){
+        return true;
+    } else {
+        return false;
+    }
+}
 
 /* 
 Array
