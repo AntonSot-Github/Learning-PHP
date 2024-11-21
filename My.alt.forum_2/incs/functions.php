@@ -102,11 +102,11 @@ function findId($topics, $topicName){
 
 
 //Post-text add
-function publicPost($topicId, $postText): bool 
+function publicPost($topicId, $postText, $picturePath): bool 
 {
     global $db;
-    $stmt = mysqli_prepare($db, "INSERT INTO `posts` (by_user_id, from_topic_id, post_text) VALUES (?, ?, ?)");
-    mysqli_stmt_bind_param($stmt, "iis", $_SESSION['user_id'], $topicId, $postText);
+    $stmt = mysqli_prepare($db, "INSERT INTO `posts` (by_user_id, from_topic_id, post_text, picture) VALUES (?, ?, ?, ?)");
+    mysqli_stmt_bind_param($stmt, "iiss", $_SESSION['user_id'], $topicId, $postText, $picturePath);
     if(mysqli_stmt_execute($stmt)){
         return true;
     } else {

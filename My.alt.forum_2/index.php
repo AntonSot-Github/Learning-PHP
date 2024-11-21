@@ -15,11 +15,13 @@
             exit;
         }
 
-        if(isset($_POST['chooseTopic']) && $_POST['chooseTopic'] == 'exist'){            
+        if(isset($_POST['chooseTopic']) && $_POST['chooseTopic'] == 'exist'){
             $topicName = $_POST['selectTopic'];
             $postText = $_POST['postMsg'];
-            $topicId = findId($topics, $topicName);
-            publicPost($topicId, $postText);
+            $picturePath = 'uploads/' . time() . $_FILES['userPicture']['name'];
+            move_uploaded_file($_FILES['userPicture']['tmp_name'], $picturePath);
+            $topicId = findId($topics, $topicName); //находим индекс для топика, который выбран в форме
+            publicPost($topicId, $postText, $picturePath);
             header("Location: index.php");
             exit;
             
@@ -27,7 +29,7 @@
     }
 
     //dump($_POST);
-
+    //dump($_FILES);
 
 ?>
 
@@ -105,10 +107,10 @@
 
                 <div class="form-post__box">
                     <label for="postMsg">Your post</label>
-                    <textarea name="postMsg" id="postMsg" placeholder="Message here"></textarea>
+                    <textarea class="form-post__text" name="postMsg" id="postMsg" placeholder="Message here" ></textarea>
                 </div>
 
-                <button type="submit" class="btn btn-grad btn-msg">Publik</button>
+                <button type="submit" class="btn btn-grad btn__public">Public</button>
 
             </form>
 

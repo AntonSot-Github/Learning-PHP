@@ -32,6 +32,9 @@
 .btn:hover::before {
   width: 86%;
 }
+.btn__public:hover::before {
+  width: 80%;
+}
 
 .btn-log::before {
   right: 0;
@@ -371,14 +374,20 @@
 .form-post * {
   margin-bottom: 0.5rem;
 }
+.form-post__text {
+  resize: none;
+  padding: 0.5rem;
+  outline: none;
+  border: 1px solid #c5c2c2;
+  border-radius: 0.25rem;
+  white-space: pre-wrap;
+  height: 30vh;
+}
+.form-post__text:focus {
+  box-shadow: 0 0 5px 0.3rem rgba(136, 230, 126, 0.5);
+  border: 1px solid #000000;
+}
 
-/*     &__choose-box
- *  &__picture-box
- *      display: flex
- *      flex-direction: column
- *  &__box
- *      display: flex
- *      flex-direction: column */
 * {
   margin: 0;
   padding: 0;
