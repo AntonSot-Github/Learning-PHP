@@ -79,6 +79,7 @@
   width: 100%;
   display: flex;
   flex-direction: column;
+  margin-bottom: 1rem;
 }
 .nav__header-box {
   background-color: rgba(136, 230, 126, 0.8078431373);
@@ -362,10 +363,44 @@
   background-size: 16px;
 }
 
+.newPost-formBox {
+  position: absolute;
+  width: 100%;
+  height: 75vh;
+  padding: 1rem;
+  background-color: #d8d7d7;
+  border-radius: 1rem;
+  z-index: 10;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.newPost-formBox__disable {
+  position: relative;
+  margin-top: auto;
+  height: 2.5rem;
+  width: 50%;
+  margin-bottom: 0.5rem;
+  bottom: 0;
+}
+.newPost-formBox__disable *:not(.newPost-formBox__btn) {
+  display: none;
+}
+.newPost-formBox__btn {
+  align-self: center;
+  width: 50%;
+}
+.newPost-formBox__btn:hover::before {
+  width: 94%;
+}
+
 .form-post {
   display: flex;
   flex-direction: column;
   height: 100%;
+  width: 100%;
 }
 .form-post div {
   display: flex;
@@ -395,24 +430,24 @@
 }
 
 html {
-  max-width: 100vw;
-  max-height: 100vh;
+  position: relative;
 }
 
 body {
   position: relative;
   background-color: #777;
-  display: grid;
-  height: 100vh;
-  grid-template-rows: 10% 85% 5%;
+  width: 100%;
 }
 
 .container {
   position: relative;
   width: 50%;
+  height: -moz-max-content;
+  height: max-content;
   margin: 0 auto;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }
 
 .link {
@@ -449,7 +484,8 @@ body {
 }
 
 footer {
-  position: relative;
+  position: absolute;
+  align-self: flex-end;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -479,12 +515,23 @@ footer {
   height: 80vh;
 }
 
-.newPost {
-  position: absolute;
+.posts {
+  z-index: 5;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   width: 100%;
-  height: 75vh;
-  padding: 1rem;
-  align-self: center;
+}
+
+.post {
+  width: 100%;
+  position: relative;
+  min-height: 8vh;
+  max-height: -moz-max-content;
+  max-height: max-content;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
   background-color: #d8d7d7;
-  border-radius: 1rem;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
 }/*# sourceMappingURL=style.css.map */

@@ -8,25 +8,39 @@
 
     if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
-        if(isset($_POST['topicName']) && !empty($_POST['topicName'])){
+        if(isset($_POST['topicName']) && !empty($_POST['topicName']) && !isset($_POST['chooseTopic'])){
             $topicName = htmlspecialchars(trim($_POST['topicName']));
             createTopic($_SESSION['user_id'], $topicName);
             header("Location: index.php");
             exit;
         }
 
-        if(isset($_POST['chooseTopic']) && $_POST['chooseTopic'] == 'exist'){
-            $topicName = $_POST['selectTopic'];
-            $postText = $_POST['postMsg'];
-            $picturePath = 'uploads/' . time() . $_FILES['userPicture']['name'];
-            move_uploaded_file($_FILES['userPicture']['tmp_name'], $picturePath);
-            $topicId = findId($topics, $topicName); //находим индекс для топика, который выбран в форме
-            publicPost($topicId, $postText, $picturePath);
-            header("Location: index.php");
-            exit;
-            
+        if(isset($_POST['chooseTopic'])){
+
+            if($_POST['chooseTopic'] == 'exist'){
+                $topicName = $_POST['selectTopic'];
+                $postText = $_POST['postMsg'];
+                $picturePath = 'uploads/' . time() . $_FILES['userPicture']['name'];
+                move_uploaded_file($_FILES['userPicture']['tmp_name'], $picturePath);
+                $topicId = findId($topics, $topicName); //находим индекс для топика, который выбран в форме
+                publicPost($topicId, $postText, $picturePath);
+                header("Location: index.php");
+                exit;
+            } elseif ($_POST['chooseTopic'] == 'newOne'){
+                $topicName = $_POST['topicName'];
+                createTopic($_SESSION['user_id'], $topicName);
+
+                // Получаем id добавленной темы
+                $topicId = mysqli_insert_id($db);
+
+                $postText = $_POST['postMsg'];
+                $picturePath = 'uploads/' . time() . $_FILES['userPicture']['name'];
+                move_uploaded_file($_FILES['userPicture']['tmp_name'], $picturePath);
+                publicPost($topicId, $postText, $picturePath);
+                header("Location: index.php");
+                exit;
+            }}
         }
-    }
 
     //dump($_POST);
     //dump($_FILES);
@@ -69,8 +83,16 @@
 
         </div >
 
+        <div class="posts">
+            <?php foreach($posts as $post): ?>
+                <div class="post"><?= $post ?></div>
+            <?php endforeach; ?>
+        </div>
 
-        <div class="newPost">
+
+        <div class="newPost-formBox newPost-formBox__disable">
+
+            <a class="newPost-formBox__btn link btn btn-grad" href="#">New post</a>
 
             <form class="form-post" method="post" enctype="multipart/form-data">
 
@@ -115,9 +137,11 @@
             </form>
 
         </div>
-
+        
 
 
     </div>
 
-<?php require_once __DIR__ . "/views/footer.php" ?>
+<?php require_once __DIR__ . '/views/footer.php'; ?>
+
+<?php //dump($posts) ?>
