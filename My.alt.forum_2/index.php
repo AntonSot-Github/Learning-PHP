@@ -3,9 +3,6 @@
     
     $title = 'main';
 
-
-   
-
     if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
         if(isset($_POST['topicName']) && !empty($_POST['topicName']) && !isset($_POST['chooseTopic'])){
@@ -15,6 +12,7 @@
             exit;
         }
 
+        // Добавление нового поста для новой или уже существующей темы
         if(isset($_POST['chooseTopic'])){
 
             if($_POST['chooseTopic'] == 'exist'){
@@ -28,11 +26,8 @@
                 exit;
             } elseif ($_POST['chooseTopic'] == 'newOne'){
                 $topicName = $_POST['topicName'];
-                createTopic($_SESSION['user_id'], $topicName);
-
-                // Получаем id добавленной темы
-                $topicId = mysqli_insert_id($db);
-
+                createTopic($_SESSION['user_id'], $topicName);                
+                $topicId = mysqli_insert_id($db); // Получаем id добавленной темы
                 $postText = $_POST['postMsg'];
                 $picturePath = 'uploads/' . time() . $_FILES['userPicture']['name'];
                 move_uploaded_file($_FILES['userPicture']['tmp_name'], $picturePath);
@@ -44,7 +39,7 @@
 
     //dump($_POST);
     //dump($_FILES);
-
+    //dump($byUser);
 ?>
 
 
@@ -52,6 +47,15 @@
 
 <?php require_once __DIR__ . "/views/header.php" ?>
 
+    <div class="topic-menu">
+            <ul class="topic-menu__list">
+            <?php foreach($topics as $topic){
+                echo '<li class="topic-menu__item"><a href="#" class="link topic-menu__link">'. $topic . '</a></li>';
+            }
+            ?>
+            </ul>
+    </div>
+    
     <div class="container">
 
         <?php if(empty($topics)): ?>
@@ -82,7 +86,9 @@
             <?php endif; ?>
 
         </div >
+        
 
+        <!-- Вывод постов -->
         <div class="posts">
             <?php foreach($posts as $post): ?>
                 <div class="post"><?= $post ?></div>
@@ -101,8 +107,6 @@
                 
                     <?php if(!empty($topics)): ?>
                         
-
-                        
                         <label for="chooseExist"><input type="radio" name="chooseTopic" value="exist" id="chooseExist" checked >
                             <select name="selectTopic" id="selectTopic">
 
@@ -113,6 +117,7 @@
 
                             </select>
                         </label>
+                        
                     <?php endif; ?>
 
                     
@@ -144,4 +149,6 @@
 
 <?php require_once __DIR__ . '/views/footer.php'; ?>
 
-<?php //dump($posts) ?>
+<?php //dump($posts);
+    
+?>

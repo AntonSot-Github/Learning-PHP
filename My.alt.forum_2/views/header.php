@@ -20,8 +20,6 @@
         $topics = array_column(mysqli_fetch_all($resTopic, MYSQLI_ASSOC), 'topic_name', 'id');
         //dump($topics);
     }
-
-
 ?>
 
 <!DOCTYPE html>
@@ -30,7 +28,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>
-        Alternative forum 2 <?php if(isset($title)) echo ': ' . "$title" ?>
+        Alternative forum 2<?php if(isset($title)) echo ': ' . "$title" ?>
     </title>
     <link rel="stylesheet" href="css/style.css">
 </head>
@@ -42,12 +40,18 @@
         <div class="nav__box">
             
             <div class="nav__topics">
-                <a href="#" class="link nav__link nav__themes nav__topics-link">Topics for conversations</a>
+                <a href="#" class="link nav__link nav__themes nav__topics-link">Three last topics</a>
                 <?php if (!empty($topics)): ?>
 
                     <ul class="nav__topics-box">
-                        <?php foreach($topics as $topic): ?>
-                            <?php echo '<li><a href="#">'. $topic . '</a></li>' ?>
+                        <?php foreach($topics as $index => $topic): ?>
+                            <?php if (count($topics) > 3) {
+                                if($index == array_key_last($topics) || $index == (array_key_last($topics) - 1) || $index == (array_key_last($topics) - 2)){
+                                    echo '<li><a href="#">'. $topic . '</a></li>';
+                                }
+                            } else {
+                                echo '<li><a href="#">'. $topic . '</a></li>';
+                            }?>
                         <?php endforeach; ?>
                     </ul>
 

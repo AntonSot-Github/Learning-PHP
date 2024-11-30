@@ -25,8 +25,15 @@ if($db) {
 } */
 
 if ($db) {
-    $mysqlPosts = mysqli_prepare($db, "SELECT post_text FROM posts");
+    $mysqlPosts = mysqli_prepare($db, "SELECT post_text FROM posts WHERE from_topic_id = 100");
     mysqli_execute($mysqlPosts);
     $resPosts = mysqli_stmt_get_result($mysqlPosts);
     $posts = array_column(mysqli_fetch_all($resPosts, MYSQLI_ASSOC), 'post_text');
+}
+
+if ($db) {
+    $mysqlByUser = mysqli_prepare($db, "SELECT by_user_id FROM posts");
+    mysqli_execute($mysqlByUser);
+    $resByUser = mysqli_stmt_get_result($mysqlByUser);
+    $byUser = array_column(mysqli_fetch_all($resByUser, MYSQLI_ASSOC), 'by_user_id');
 }
