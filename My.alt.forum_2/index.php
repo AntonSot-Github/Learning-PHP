@@ -36,7 +36,9 @@
                 exit;
             }}
         }
-
+    
+    //dump($_SESSION['user_reg_date']);
+    //dump($posts)
     //dump($_POST);
     //dump($_FILES);
     //dump($byUser);
@@ -47,15 +49,44 @@
 
 <?php require_once __DIR__ . "/views/header.php" ?>
 
+    <!-- вывод бокового меню выбора тем -->
     <div class="topic-menu">
             <ul class="topic-menu__list">
-            <?php foreach($topics as $topic){
-                echo '<li class="topic-menu__item"><a href="#" class="link topic-menu__link">'. $topic . '</a></li>';
-            }
-            ?>
+                <?php foreach($topics as $key => $topic):?> 
+                    <li class="topic-menu__item">
+                        <a href="#" class="link topic-menu__link" data-topic-id="<?= $key; ?>"><?= $topic ?></a>
+                    </li>
+                <?php endforeach; ?>
             </ul>
     </div>
     
+    <!-- Account-window -->
+    <div class="account">
+        <h2><?= $userName?></h2>
+        <p>Date of registration: <?= $_SESSION['user_reg_date'] ?></p>
+        <p>How long with us: </p>
+        <p>Your email: <?= $_SESSION['user_email'] ?></p>
+        
+        <p>Status: 
+            <?php if ($_SESSION['user_role'] === 2) {
+                echo 'Member of club';
+                } else {
+                    echo 'Administrator';} ?>
+        </p>
+        <p>
+            Your telephon-number: <?= (isset($_SESSION['user_tel'])) ? $_SESSION['user_tel'] : "we haven't your number yet"?>
+        </p>
+        <div>
+            <p>Add or change your telephon-number:</p>
+            <form method="post">
+                <input type="tel" placeholder="Telephon">
+                <button type="submit">Change number</button>
+            </form>
+        </div>
+        <a href="#">Do you want to change your password?</a>
+    </div>    
+
+    <!-- Основное содежимое сайта -->
     <div class="container">
 
         <?php if(empty($topics)): ?>
@@ -91,7 +122,20 @@
         <!-- Вывод постов -->
         <div class="posts">
             <?php foreach($posts as $post): ?>
-                <div class="post"><?= $post ?></div>
+                <div class="post" data-topic-id="<?=$post['from_topic_id'] ?>">
+                    <div class="post__topPart">
+                        <p><?= $post['name'] ?></p>
+                        <p><?= $post['added_at'] ?></p>
+                    </div>
+                    <?php if(!empty($post['picture'])): ?>
+                        <div class="post__containerImg">
+                            <img class="post__img" src="<?= $post['picture'] ?>" alt="img">
+                        </div>
+                    <?php endif; ?>
+                    <div class="post__textPart">
+                        <p><?= $post['post_text'] ?></p>
+                    </div>
+                </div>
             <?php endforeach; ?>
         </div>
 
@@ -150,5 +194,5 @@
 <?php require_once __DIR__ . '/views/footer.php'; ?>
 
 <?php //dump($posts);
-    
+    //dump($topics);
 ?>

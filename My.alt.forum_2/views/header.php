@@ -74,7 +74,7 @@
                 <?php if(isset($_SESSION['user'])): ?>
                     <div class="dropdown-content">
                         <a class="dropdown-content__a" href="?do=relogin">Relogin</a>
-                        <a class="dropdown-content__a" href="#">Your account</a>
+                        <a class="dropdown-content__a account-link" href="#">Your account</a>
                         <a class="dropdown-content__a" href="?do=logout">Logout</a>
                     </div>
                 <?php endif; ?>

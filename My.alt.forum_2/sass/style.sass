@@ -4,6 +4,7 @@
 @import "abstracts/_link-underlining.sass"
 @import "layout/_form.sass"
 @import "abstracts/_class-helpers.sass"
+@import "layout/_post.sass"
 
 
 *
@@ -18,7 +19,8 @@ html
 body
     position: relative
     background-color: #777
-    height: 100vh
+    min-height: 100vh
+    max-height: max-content
     display: flex
     flex-direction: column
 
@@ -29,7 +31,7 @@ body
     display: flex 
     flex-direction: column
     align-items: center
-    height: 100%
+    min-height: calc( 88vh - 2.5rem )
     
 
 .link
@@ -63,13 +65,11 @@ body
 
 footer
     position: absolute
-
     display: flex
     justify-content: center
     align-items: center
     vertical-align: middle
     width: 100%
-
     bottom: 0
     border-radius: 1rem 1rem 0 0
     height: 2.5rem
@@ -83,25 +83,6 @@ footer
     img
         width: 60vw
         height: 80vh
-
-.posts
-    z-index: 5
-    position: relative
-    display: flex
-    flex-direction: column
-    justify-content: center
-    width: 100%
-
-.post
-    width: 100%
-    position: relative
-    min-height: 8vh
-    max-height: max-content
-    padding: 0.75rem
-    margin-bottom: .5rem
-    border-radius: .5rem
-    background-color: #d8d7d7
-    box-shadow: 0 0 30px rgba(0, 0, 0, 0.7)
 
 .topic-menu
     background-color: #88e67ece
@@ -120,4 +101,7 @@ footer
         cursor: pointer
         &:hover
             background-color: #d8d7d7
+    &__link 
+        display: block
+        width: 100%
 

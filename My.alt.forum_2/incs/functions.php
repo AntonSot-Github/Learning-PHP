@@ -66,11 +66,17 @@ function login($name, $logPass): bool
 
     // Извлекаем данные пользователя
     $user = mysqli_fetch_assoc($res);    
-
+    
     // Проверяем пароль
     if ($user && password_verify($logPass, $user['password'])){
         $_SESSION['user'] = $user['name'];
         $_SESSION['user_id'] = $user['user_id'];
+        $_SESSION['user_reg_date'] = $user['reg_time_at'];
+        $_SESSION['user_email'] = $user['email'];
+        $_SESSION['user_role'] = $user['role'];
+        if(!empty($user['tel'])){
+            $_SESSION['user_tel'] = $user['tel'];
+        }
         return true;
     } else {
         return false;

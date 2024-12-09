@@ -9,26 +9,13 @@ if($db) {
     $topics = array_column(mysqli_fetch_all($resTopic, MYSQLI_ASSOC), 'topic_name', 'id');
 }
 
-/* if ($db) {
-    $mysqlPosts = mysqli_prepare($db, "SELECT by_user_id, from_topic_id, post_text, added_at, picture FROM posts");
-    mysqli_execute($mysqlPosts);
-    $resPosts = mysqli_stmt_get_result($mysqlPosts);
-    $posts = array_map(function($row){
-        return [
-            'by_user_id' => $row['by_user_id'],
-            'from_topic_id' => $row['from_topic_id'],
-            'post_text' => $row['post_text'],
-            'added_at' => $row['added_at'],
-            'picture' => $row['picture'],
-        ];
-    }, mysqli_fetch_all($resPosts, MYSQLI_ASSOC));
-} */
+
 
 if ($db) {
-    $mysqlPosts = mysqli_prepare($db, "SELECT post_text FROM posts WHERE from_topic_id = 100");
+    $mysqlPosts = mysqli_prepare($db, "SELECT post_text, from_topic_id, added_at, picture, users.name FROM posts LEFT JOIN users ON posts.by_user_id = users.user_id");
     mysqli_execute($mysqlPosts);
     $resPosts = mysqli_stmt_get_result($mysqlPosts);
-    $posts = array_column(mysqli_fetch_all($resPosts, MYSQLI_ASSOC), 'post_text');
+    $posts = mysqli_fetch_all($resPosts, MYSQLI_ASSOC);
 }
 
 if ($db) {
@@ -37,3 +24,4 @@ if ($db) {
     $resByUser = mysqli_stmt_get_result($mysqlByUser);
     $byUser = array_column(mysqli_fetch_all($resByUser, MYSQLI_ASSOC), 'by_user_id');
 }
+
