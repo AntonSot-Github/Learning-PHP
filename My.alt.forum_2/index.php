@@ -35,8 +35,44 @@
                 header("Location: index.php");
                 exit;
             }}
-        }
-    
+
+        if(!empty($_POST["changeEmail"])){
+            // Подготовка запроса
+            $stmt = mysqli_prepare($db, "UPDATE `users` SET email = ? WHERE name = ?");
+            if($stmt){
+                mysqli_stmt_bind_param($stmt, "ss", $_POST["changeEmail"], $userName);
+                if(mysqli_execute($stmt)){
+                    $_SESSION['user_email'] = $_POST["changeEmail"];
+                    $_SESSION['success'] = 'Your email is changed';                    
+                    header("Location: index.php");
+                    exit;
+                } else {
+                    $_SESSION['error'] = 'Error: ' . mysqli_stmt_error($stmt);
+                    }
+                }
+            } else {
+                $_SESSION['error_edit_email'] = 'Email is invalid';
+            }
+
+            if(!empty($_POST["changeTel"])){
+                // Подготовка запроса
+                $stmt = mysqli_prepare($db, "UPDATE `users` SET tel = ? WHERE name = ?");
+                if($stmt){
+                    mysqli_stmt_bind_param($stmt, "ss", $_POST["changeTel"], $userName);
+                    if(mysqli_execute($stmt)){
+                        $_SESSION['user_tel'] = $_POST["changeTel"];
+                        $_SESSION['success'] = 'Your tel-number is changed';
+                        header("Location: index.php");
+                        exit;
+                    } else {
+                        $_SESSION['error'] = 'Error: ' . mysqli_stmt_error($stmt);
+                        }
+                    }
+                } else {
+                    $_SESSION['error_edit_email'] = 'Tel-number is invalid';
+            }
+    }
+    //echo $_SESSION['user_ava'];
     //dump($_SESSION['user_reg_date']);
     //dump($posts)
     //dump($_POST);
@@ -61,30 +97,55 @@
     </div>
     
     <!-- Account-window -->
-    <div class="account">
-        <h2><?= $userName?></h2>
-        <p>Date of registration: <?= $_SESSION['user_reg_date'] ?></p>
-        <p>How long with us: </p>
-        <p>Your email: <?= $_SESSION['user_email'] ?></p>
-        
-        <p>Status: 
-            <?php if ($_SESSION['user_role'] === 2) {
-                echo 'Member of club';
-                } else {
-                    echo 'Administrator';} ?>
-        </p>
-        <p>
-            Your telephon-number: <?= (isset($_SESSION['user_tel'])) ? $_SESSION['user_tel'] : "we haven't your number yet"?>
-        </p>
-        <div>
-            <p>Add or change your telephon-number:</p>
-            <form method="post">
-                <input type="tel" placeholder="Telephon">
-                <button type="submit">Change number</button>
-            </form>
+    <?php if(isset($_SESSION['user'])): ?>
+        <div class="account">
+            
+            <h2><?php if(isset($userName)) { echo $userName; }?></h2>
+            <div class="account__ava">
+                <div>
+                    <img src="<?=$_SESSION['user_ava'] ?>" alt="img">
+                    <a class="account__ava-link" href="#">&#9998</a>
+                </div>
+                <form method="post" enctype="multipart/form-data">
+                    <input name="user_ava" type="file">
+                    <button class="btn btn-grad" type="submit">Save</button>
+                </form>
+            </div>
+            <p>Date of registration: <?= $_SESSION['user_reg_date'] ?></p>
+            <p>How long with us: </p>
+            <p>Your email: <?= '/' . $_SESSION['user_email'] ?> <a id="change-email" class="changeEmail" href="#">&#9998</a></p>
+            
+            <div class="account__changeEmail no-display">
+                <form id="form-change-email" class="no-display" method="post">
+                    
+                    <input class="form-input form-input__acc" type="email" name="changeEmail" placeholder="New email">
+                    <button class="btn btn-grad" type="submit">Save</button>
+
+                </form>
+            </div>
+                
+                
+            <p>Status: 
+                <?php echo ($_SESSION['user_role'] === 2) ? "Member of club" : "Administrator" ?>
+            </p>
+
+            <div class="account__tel ">
+                <p> Your telephon-number:
+                <?php if(!isset($_SESSION['user_tel'])): ?> 
+                        <?= "we haven't your number yet"?> 
+                    <?php else:?>
+                        <?= $_SESSION['user_tel']?>
+                    <?php endif; ?> 
+                    <a class="changeTel" href="#">&#9998</a></p>
+                    <div class="account__changeTel no-display">
+                        <form id="change-Tel" method="post">
+                            <input name="changeTel" class="form-input form-input__acc" type="tel" placeholder="Telephon">
+                            <button class="btn btn-grad" type="submit">Save</button>
+                        </form>
+                    </div>
+            </div>
         </div>
-        <a href="#">Do you want to change your password?</a>
-    </div>    
+    <?php endif; ?>
 
     <!-- Основное содежимое сайта -->
     <div class="container">

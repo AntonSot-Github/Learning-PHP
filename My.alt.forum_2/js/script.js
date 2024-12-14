@@ -59,3 +59,18 @@ if(accountEditBtn){
         
     })
 }
+
+//Edit account
+// --edit email
+const accEmailBtn = document.getElementById("change-email");
+const accountChangeEmail = document.querySelector(".account__changeEmail");
+accEmailBtn.addEventListener("click", function(){
+    accountChangeEmail.classList.toggle("no-display");
+})
+// --edit tel-number
+const accTelBtn = document.querySelector(".changeTel");
+const accChangeTel = document.querySelector(".account__changeTel");
+accTelBtn.addEventListener("click", function(){
+    accChangeTel.classList.toggle("no-display");
+})
+

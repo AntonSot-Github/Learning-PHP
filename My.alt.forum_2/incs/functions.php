@@ -74,6 +74,7 @@ function login($name, $logPass): bool
         $_SESSION['user_reg_date'] = $user['reg_time_at'];
         $_SESSION['user_email'] = $user['email'];
         $_SESSION['user_role'] = $user['role'];
+        $_SESSION['user_ava'] = $user['avatar'];
         if(!empty($user['tel'])){
             $_SESSION['user_tel'] = $user['tel'];
         }

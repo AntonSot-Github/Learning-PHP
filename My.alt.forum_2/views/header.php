@@ -2,13 +2,13 @@
     require_once __DIR__ . "/../incs/functions.php";
 
     if (isset($_GET['do']) && $_GET['do'] == 'logout'){
-        unset($_SESSION['user']);
+        session_destroy();
         header("Location: index.php");
         exit;
     }
 
     if(isset($_GET['do']) && $_GET['do'] == 'relogin'){
-        unset($_SESSION['user']);
+        session_destroy();
         header("Location: login.php");
         exit;
     }
