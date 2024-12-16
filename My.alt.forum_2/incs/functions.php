@@ -90,12 +90,7 @@ function createTopic($userId, $topicName): bool
     global $db;
     $stmt = mysqli_prepare($db, "INSERT INTO `topics` (by_user_id, topic_name) VALUES (?, ?)");
     mysqli_stmt_bind_param($stmt, "is", $userId, $topicName);
-     
-    if (mysqli_stmt_execute($stmt)) {
-        return true;
-    } else {
-        return false;
-    }
+    return mysqli_execute($stmt);
 }
 
 //Topic Id from DB
@@ -114,11 +109,16 @@ function publicPost($topicId, $postText, $picturePath): bool
     global $db;
     $stmt = mysqli_prepare($db, "INSERT INTO `posts` (by_user_id, from_topic_id, post_text, picture) VALUES (?, ?, ?, ?)");
     mysqli_stmt_bind_param($stmt, "iiss", $_SESSION['user_id'], $topicId, $postText, $picturePath);
-    if(mysqli_stmt_execute($stmt)){
-        return true;
-    } else {
-        return false;
-    }
+    return mysqli_execute($stmt);
+}
+
+//Load avatar to DB
+function avaLoad($picAvaPath): bool
+{
+    global $db;
+    $stmt = mysqli_prepare($db, "UPDATE `users` SET avatar = ? WHERE id = ?");
+    mysqli_stmt_bind_param($stmt, 'si', $picAvaPath, $_SESSION['user_id']);
+    return mysqli_execute($stmt);
 }
 
 /* 

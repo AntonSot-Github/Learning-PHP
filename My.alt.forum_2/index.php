@@ -35,7 +35,8 @@
                 header("Location: index.php");
                 exit;
             }}
-
+        
+        //Changing email
         if(!empty($_POST["changeEmail"])){
             // Подготовка запроса
             $stmt = mysqli_prepare($db, "UPDATE `users` SET email = ? WHERE name = ?");
@@ -53,30 +54,75 @@
             } else {
                 $_SESSION['error_edit_email'] = 'Email is invalid';
             }
-
-            if(!empty($_POST["changeTel"])){
-                // Подготовка запроса
-                $stmt = mysqli_prepare($db, "UPDATE `users` SET tel = ? WHERE name = ?");
-                if($stmt){
-                    mysqli_stmt_bind_param($stmt, "ss", $_POST["changeTel"], $userName);
-                    if(mysqli_execute($stmt)){
-                        $_SESSION['user_tel'] = $_POST["changeTel"];
-                        $_SESSION['success'] = 'Your tel-number is changed';
-                        header("Location: index.php");
-                        exit;
-                    } else {
-                        $_SESSION['error'] = 'Error: ' . mysqli_stmt_error($stmt);
-                        }
-                    }
+        
+        //Adding or changing telephon number 
+        if(!empty($_POST["changeTel"])){
+            // Подготовка запроса
+            $stmt = mysqli_prepare($db, "UPDATE `users` SET tel = ? WHERE name = ?");
+            if($stmt){
+                mysqli_stmt_bind_param($stmt, "ss", $_POST["changeTel"], $userName);
+                if(mysqli_execute($stmt)){
+                    $_SESSION['user_tel'] = $_POST["changeTel"];
+                    $_SESSION['success'] = 'Your tel-number is changed';
+                    header("Location: index.php");
+                    exit;
                 } else {
-                    $_SESSION['error_edit_email'] = 'Tel-number is invalid';
+                    $_SESSION['error'] = 'Error: ' . mysqli_stmt_error($stmt);
+                    }
+                }
+            } else {
+                $_SESSION['error_edit_email'] = 'Tel-number is invalid';
             }
+        
+        //Changin avatar
+        //Константа UPLOAD_ERR_OK указывает, что идёт проверка на отсутствие ошибок при загрузке файла.
+        if (!empty($_FILES['user_ava']) && $_FILES['user_ava']['error'] === UPLOAD_ERR_OK) {
+
+            // Папка для загрузки файлов (абсолютный путь)
+            $uploadDir = __DIR__ . "/uploads/"; 
+
+            // Разрешенные типы файлов
+            $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+
+            // Максимальный размер файла (4MB)
+            $maxSize = 4 * 1024 * 1024;
+
+            // Получаем имя файла (basename защищает от включения путей)
+            $fileName = basename($_FILES['user_ava']['name']);
+
+            // Создаем уникальное имя файла, используя имя пользователя и текущее время
+            $uniqueFileName = $_SESSION['user'] . "_" . time() . "_" . $fileName;
+
+            // Полный путь для сохранения файла
+            $picAvaPath = $uploadDir . $uniqueFileName;
+        
+            // Проверяем, что тип файла допустим
+            if (!in_array($_FILES['user_ava']['type'], $allowedTypes)) {
+                // Устанавливаем сообщение об ошибке, если тип файла не разрешен
+                $_SESSION['error'] = "Only JPG, PNG, and GIF files are allowed.";
+            // Проверяем размер файла
+            } elseif ($_FILES['user_ava']['size'] > $maxSize) {                
+                $_SESSION['error'] = "File is too large. Max size is 2MB.";
+            // Если тип и размер файла корректны, пробуем переместить файл
+            } elseif (move_uploaded_file($_FILES['user_ava']['tmp_name'], $picAvaPath)) {
+                if (avaLoad($picAvaPath)) {
+                    $_SESSION['user_ava'] = $picAvaPath;
+                    $_SESSION['success'] = "New avatar uploaded successfully.";
+                    header("Location: index.php");
+                    exit;
+                } else {
+                    $_SESSION['error'] = "We couldn't upload your avatar to the database.";
+                }
+            } else {
+                $_SESSION['error'] = "Error moving the uploaded file.";
+            }
+        }
     }
     //echo $_SESSION['user_ava'];
     //dump($_SESSION['user_reg_date']);
     //dump($posts)
     //dump($_POST);
-    //dump($_FILES);
+    dump($_FILES);
     //dump($byUser);
 ?>
 
@@ -99,7 +145,12 @@
     <!-- Account-window -->
     <?php if(isset($_SESSION['user'])): ?>
         <div class="account">
-            
+            <div class="error-container">
+                <?php if(isset($_SESSION['error'])){
+                    echo $_SESSION['error'];
+                    unset($_SESSION['error']);
+                } ?>
+            </div>
             <h2><?php if(isset($userName)) { echo $userName; }?></h2>
             <div class="account__ava">
                 <div>
@@ -123,8 +174,7 @@
 
                 </form>
             </div>
-                
-                
+
             <p>Status: 
                 <?php echo ($_SESSION['user_role'] === 2) ? "Member of club" : "Administrator" ?>
             </p>
