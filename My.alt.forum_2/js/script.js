@@ -53,14 +53,31 @@ topics.forEach(topic => {
 
 //Edit account
 const accountEditBtn = document.querySelector(".account-link") || null;
+
 if(accountEditBtn){
+    const accWindow = document.querySelector(".account");
+    const accWinCloseBtn = document.querySelector(".account__btn-close");
+    const container = document.querySelector(".container");
     accountEditBtn.addEventListener("click", (e) => {
         e.preventDefault(); // Отменяем переход по ссылке
-        
+        accWindow.classList.remove("no-display");
+        container.classList.add("no-display");
+    })
+    accWinCloseBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        accWindow.classList.add("no-display");
+        container.classList.remove("no-display");
     })
 }
 
 //Edit account
+// -- change avatar
+const accAvaBtn = document.querySelector(".account__ava-link");
+const accChangeAva = document.querySelector(".form-ava");
+accAvaBtn.addEventListener("click", function(){
+    accChangeAva.classList.toggle("no-display");
+})
+
 // --edit email
 const accEmailBtn = document.getElementById("change-email");
 const accountChangeEmail = document.querySelector(".account__changeEmail");
@@ -73,4 +90,13 @@ const accChangeTel = document.querySelector(".account__changeTel");
 accTelBtn.addEventListener("click", function(){
     accChangeTel.classList.toggle("no-display");
 })
-
+//--delete account
+const delAccBtn = document.querySelector(".delAcc");
+const delAccConfirm = document.querySelector(".account__deleteConf");
+const delAccBtnNo = document.querySelector(".account__deleteAnswer--no");
+delAccBtn.addEventListener("click", function(){
+    delAccConfirm.classList.toggle("no-display");
+})
+delAccBtnNo.addEventListener("click", () => {
+    delAccConfirm.classList.add("no-display");
+})

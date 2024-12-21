@@ -88,8 +88,8 @@ function login($name, $logPass): bool
 function createTopic($userId, $topicName): bool
 {
     global $db;
-    $stmt = mysqli_prepare($db, "INSERT INTO `topics` (by_user_id, topic_name) VALUES (?, ?)");
-    mysqli_stmt_bind_param($stmt, "is", $userId, $topicName);
+    $stmt = mysqli_prepare($db, "INSERT INTO `topics` (by_user_id, topic_name, user_name) VALUES (?, ?, ?)");
+    mysqli_stmt_bind_param($stmt, "is", $userId, $topicName, $_SESSION['user']);
     return mysqli_execute($stmt);
 }
 
@@ -116,11 +116,19 @@ function publicPost($topicId, $postText, $picturePath): bool
 function avaLoad($picAvaPath): bool
 {
     global $db;
-    $stmt = mysqli_prepare($db, "UPDATE `users` SET avatar = ? WHERE id = ?");
+    $stmt = mysqli_prepare($db, "UPDATE `users` SET avatar = ? WHERE user_id = ?");
     mysqli_stmt_bind_param($stmt, 'si', $picAvaPath, $_SESSION['user_id']);
     return mysqli_execute($stmt);
 }
 
+//Delete account
+function accDel(): bool 
+{
+    global $db;
+    $stmt = mysqli_prepare($db, "DELETE FROM `users` WHERE user_id = ?");
+    mysqli_stmt_bind_param($stmt, "i", $_SESSION['user_id']);
+    return mysqli_execute($stmt);
+}
 /* 
 Array
 (

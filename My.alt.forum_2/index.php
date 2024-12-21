@@ -3,11 +3,20 @@
     
     $title = 'main';
 
+    //------Кол-во дней с момента регистрации-----
+    //time() - время в сек от старта эпохи
+    //strtotime($_SESSION['user_reg_date']) - переводит в секунды(со момента старта эпохи) дату регистрации 
+    //intval - возвращает целую часть | 86400 - количество секунд в одних сутках
+    if(isset($_SESSION['user_reg_date'])){
+        $daysPassReg = intval((time() - strtotime($_SESSION['user_reg_date'])) / 86400);
+    } 
+    
+
     if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
         if(isset($_POST['topicName']) && !empty($_POST['topicName']) && !isset($_POST['chooseTopic'])){
             $topicName = htmlspecialchars(trim($_POST['topicName']));
-            createTopic($_SESSION['user_id'], $topicName);
+            createTopic($_SESSION['user_id'], $topicName, $_SESSION['user']);
             header("Location: index.php");
             exit;
         }
@@ -44,7 +53,7 @@
                 mysqli_stmt_bind_param($stmt, "ss", $_POST["changeEmail"], $userName);
                 if(mysqli_execute($stmt)){
                     $_SESSION['user_email'] = $_POST["changeEmail"];
-                    $_SESSION['success'] = 'Your email is changed';                    
+                    $_SESSION['success'] = 'Your email is changed';
                     header("Location: index.php");
                     exit;
                 } else {
@@ -78,8 +87,7 @@
         //Константа UPLOAD_ERR_OK указывает, что идёт проверка на отсутствие ошибок при загрузке файла.
         if (!empty($_FILES['user_ava']) && $_FILES['user_ava']['error'] === UPLOAD_ERR_OK) {
 
-            // Папка для загрузки файлов (абсолютный путь)
-            $uploadDir = __DIR__ . "/uploads/"; 
+
 
             // Разрешенные типы файлов
             $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
@@ -94,14 +102,14 @@
             $uniqueFileName = $_SESSION['user'] . "_" . time() . "_" . $fileName;
 
             // Полный путь для сохранения файла
-            $picAvaPath = $uploadDir . $uniqueFileName;
+            $picAvaPath = "uploads/" . $uniqueFileName;
         
             // Проверяем, что тип файла допустим
             if (!in_array($_FILES['user_ava']['type'], $allowedTypes)) {
                 // Устанавливаем сообщение об ошибке, если тип файла не разрешен
                 $_SESSION['error'] = "Only JPG, PNG, and GIF files are allowed.";
             // Проверяем размер файла
-            } elseif ($_FILES['user_ava']['size'] > $maxSize) {                
+            } elseif ($_FILES['user_ava']['size'] > $maxSize) {
                 $_SESSION['error'] = "File is too large. Max size is 2MB.";
             // Если тип и размер файла корректны, пробуем переместить файл
             } elseif (move_uploaded_file($_FILES['user_ava']['tmp_name'], $picAvaPath)) {
@@ -117,16 +125,30 @@
                 $_SESSION['error'] = "Error moving the uploaded file.";
             }
         }
+
+            //Delete account
+        if(isset($_POST['deleteAccount'])){
+            if(accDel()){
+                session_destroy();
+                header("Location: login.php");
+                exit;
+            } else {
+                $_SESSION['error'] = 'error: account is not deleted';
+            }
+        }
     }
+
+
+    //dump($_SESSION);
     //echo $_SESSION['user_ava'];
     //dump($_SESSION['user_reg_date']);
     //dump($posts)
     //dump($_POST);
-    dump($_FILES);
+    //dump($_FILES);
     //dump($byUser);
+    //echo $_SESSION['user_ava'];
+    
 ?>
-
-
 
 
 <?php require_once __DIR__ . "/views/header.php" ?>
@@ -144,27 +166,36 @@
     
     <!-- Account-window -->
     <?php if(isset($_SESSION['user'])): ?>
-        <div class="account">
+        <div class="account no-display">
+            <!-- Button for close acc-window -->
+            <a href="#" class="account__btn-close account__btn">&#10006</a>
+
+            <!-- Container for errors-show -->
             <div class="error-container">
                 <?php if(isset($_SESSION['error'])){
                     echo $_SESSION['error'];
                     unset($_SESSION['error']);
                 } ?>
             </div>
+
             <h2><?php if(isset($userName)) { echo $userName; }?></h2>
+
             <div class="account__ava">
                 <div>
-                    <img src="<?=$_SESSION['user_ava'] ?>" alt="img">
-                    <a class="account__ava-link" href="#">&#9998</a>
+                    <img src="<?=$_SESSION['user_ava']?>" alt="img">
+                    <a class="account__ava-link account__btn" href="#">&#9998</a>
                 </div>
-                <form method="post" enctype="multipart/form-data">
-                    <input name="user_ava" type="file">
-                    <button class="btn btn-grad" type="submit">Save</button>
-                </form>
+                <div class="form-ava no-display">
+                    <form method="post" enctype="multipart/form-data">
+                        <input name="user_ava" type="file">
+                        <button class="btn btn-grad" type="submit">Save</button>
+                    </form>
+                </div>
             </div>
             <p>Date of registration: <?= $_SESSION['user_reg_date'] ?></p>
-            <p>How long with us: </p>
-            <p>Your email: <?= '/' . $_SESSION['user_email'] ?> <a id="change-email" class="changeEmail" href="#">&#9998</a></p>
+
+            <p>How long with us: <?= $daysPassReg?> days</p>
+            <p>Your email: <?= $_SESSION['user_email'] ?> <a id="change-email" class="changeEmail account__btn" href="#">&#9998</a></p>
             
             <div class="account__changeEmail no-display">
                 <form id="form-change-email" class="no-display" method="post">
@@ -186,7 +217,7 @@
                     <?php else:?>
                         <?= $_SESSION['user_tel']?>
                     <?php endif; ?> 
-                    <a class="changeTel" href="#">&#9998</a></p>
+                    <a class="changeTel account__btn" href="#">&#9998</a></p>
                     <div class="account__changeTel no-display">
                         <form id="change-Tel" method="post">
                             <input name="changeTel" class="form-input form-input__acc" type="tel" placeholder="Telephon">
@@ -194,6 +225,22 @@
                         </form>
                     </div>
             </div>
+            <!-- Удаление аккаунта -->
+            <div class="account__delete">
+                <a class="link delAcc account__del-link" href="#">Delete account</a>
+                <div class="account__deleteConf no-display">
+
+                    <p>Are you sure?</p>
+                    <div class="account__deleteAnswer">
+                        <form method="post">
+                            <input type="hidden" name="deleteAccount">
+                            <button class="account__deleteAnswer--yes">Yes</button>
+                        </form>
+                        <a class="link account__deleteAnswer--no" href="#">No</a>
+                    </div>
+                </div>
+            </div>
+            
         </div>
     <?php endif; ?>
 
