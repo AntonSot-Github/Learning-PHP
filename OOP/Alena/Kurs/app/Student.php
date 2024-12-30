@@ -26,4 +26,9 @@ class Student extends Person
     {
         $this->univer = $univer;
     }
+
+    public function introduce()
+    {
+        return "Hello! I am student " . $this->getUniver();
+    }
 }
