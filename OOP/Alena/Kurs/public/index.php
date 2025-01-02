@@ -15,5 +15,10 @@ $student1->setUniver("MGU");
 //print_r($student1);
 //print_r($student1->getUniver());
 //print_r($student2);
-print_r($student1->introduce());
+//print_r($student1->introduce());
+//print_r($student2->howOld());
 
+$student2->setSchool("School 1");
+//print_r($student2->getSchool());
+
+echo "Quentety of students:" . Student::getStudenCounter(), "\n";
