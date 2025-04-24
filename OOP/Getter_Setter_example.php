@@ -27,6 +27,11 @@ class Person {
         // Проверка данных
         if ($age < 0) {
             throw new InvalidArgumentException("Age cannot be negative.");
+            //throw new InvalidArgumentException(...) — это способ выбросить исключение, если аргумент некорректен.
+            //throw — ключевое слово для выброса исключения (ошибки на уровне программы).
+            //new InvalidArgumentException(...) — создаёт объект встроенного класса исключения PHP.
+            //Если передать имя короче 2 символов, то выполнение прервётся 
+            // и будет выдана ошибка, которую можно будет "поймать" через try/catch (если нужно).
         }
         $this->age = $age;
     }
@@ -53,6 +58,9 @@ class DynamicPerson {
         $this->data[$property] = $value;
     }
 }
+
+//__get() и __set() — магические методы PHP.
+//Они позволяют обращаться к несуществующим свойствам объекта как будто они есть.
 
 $person = new DynamicPerson();
 $person->name = "Alice"; // Устанавливается через __set
