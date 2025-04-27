@@ -13,6 +13,8 @@ class Usercounter
     {
         return self::$counter;
     }
+
+
 }
 
 $userr1 = new Usercounter();
