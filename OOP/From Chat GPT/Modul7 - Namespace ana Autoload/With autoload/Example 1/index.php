@@ -9,4 +9,12 @@ spl_autoload_register(function($class)
     }
 });
 
+use App\Models\User;
+use App\Models\Product;
+
 $user = new User("user@mail.com");
+echo $user->getEmail() . PHP_EOL;
+
+$product = new Product("Laptop");
+echo $product->getName() . PHP_EOL;
+$product->log("It's flagman among the all offers");
