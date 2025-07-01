@@ -8,11 +8,12 @@ class AggressiveStrategy
 
     public function agressiveStrategy():int
     {
-        return +5;
+        return 5;
     }
 
     public static function useAgrStat()
     {
-        self::agressiveStrategy();
+        $agrObj = new self();
+        return $agrObj->agressiveStrategy();
     }
 }

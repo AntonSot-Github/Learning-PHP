@@ -13,6 +13,7 @@ class RandomStrategy
 
     public static function useRandStrat()
     {
-        self::randomStrategy();
+        $objRandStrat = new self();
+        return $objRandStrat->randomStrategy();
     }
 }

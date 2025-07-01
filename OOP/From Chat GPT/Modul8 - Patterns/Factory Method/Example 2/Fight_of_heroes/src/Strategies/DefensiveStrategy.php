@@ -13,6 +13,7 @@ class DefensiveStrategy
 
     public static function useDefStrat()
     {
-        self::DefensiveStrategy();
+        $objDefStrat = new self();
+        return $objDefStrat->DefensiveStrategy();
     }
 }

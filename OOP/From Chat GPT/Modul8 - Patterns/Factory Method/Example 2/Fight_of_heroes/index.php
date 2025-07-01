@@ -5,6 +5,11 @@ if(file_exists(__DIR__ . "/vendor/autoload.php")){
 }
 
 use App\Heroes\HeroFactory;
+use App\Strategies\AggressiveStrategy;
+use App\Strategies\BattleStrategyInterface;
+use App\Strategies\RandomStrategy;
+use App\Strategies\DefensiveStrategy;
+use App\Battle\Battle;
 
 $heroes = ["Archer", "Mage", "Warrior"];
 
@@ -24,5 +29,12 @@ foreach($randHeroes as $hero){
     $heroInBattle[] = HeroFactory::createHero($hero);
     }
 
-print_r ($heroInBattle);
 
+
+[$hero1, $hero2] = $heroInBattle;
+
+
+
+$battle1 = new Battle(3);
+
+$battle1->fight();
