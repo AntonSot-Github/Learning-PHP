@@ -11,7 +11,7 @@ class AggressiveStrategy
         return 5;
     }
 
-    public static function useAgrStat()
+    public static function useAgrStrat()
     {
         $agrObj = new self();
         return $agrObj->agressiveStrategy();
