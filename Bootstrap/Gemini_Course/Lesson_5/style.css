@@ -1,0 +1,33 @@
+
+.custom-navbar-bg{
+    @media (max-width:576px){
+        background-color: rebeccapurple;
+    }
+    @media (min-width: 577px) {
+        background-color: #FBFBFB;
+    }
+}
+
+.hero-section{
+    background-image: url(https://purepng.com/public/uploads/large/nature-yuh.png);
+    background-size: cover;
+    background-position: center;
+    min-height: 60vh;
+}
+
+@media (min-width: 992px){
+    .btn-primary{
+        border-color: mediumseagreen;
+        background-color: mediumseagreen;
+    }
+    .btn-secondary{
+        border-color: indianred;
+        background-color: indianred;
+    }
+}
+
+.form-control-custom{
+    border-color: darkorange;
+    box-shadow: 0 0 0 0.25rem rgba(255, 140, 0, 0.25);
+}
+

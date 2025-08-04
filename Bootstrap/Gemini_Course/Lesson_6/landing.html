@@ -3,34 +3,64 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Lesson 5 Bootstrap</title>
+    <title>Lesson 6 Bootstrap</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
+        <!-- offcanvas -->
+
         <!-- Navbar -->
         <nav class="navbar navbar-expand-lg custom-navbar-bg">
             <div class="container-fluid px-5">
-                <a class="navbar-brand" href="#">Navbar</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
+                <a class="navbar-brand " href="#">Navbar</a>
+                <button class="navbar-toggler d-sm-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
                 </button>
+                <div class="offcanvas-container">
+                    <button class="btn btn-primary btn-offcanvas" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasLesson_6" aria-controls="offcanvasLesson_6">
+                        More
+                    </button>
+                    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasLesson_6" aria-labelledby="offcanvasLesson_6_Label">
+                        <div class="offcanvas-header">
+                            <h5 class="offcanvas-title" id="offcanvasExampleLabel">Navbar</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                        </div>
+                        <div class="offcanvas-body">
+                            <ul class="navbar-nav d-flex">
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">Features</a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Menu
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="#">Contact us</a></li>
+                                        <li><a class="dropdown-item" href="#">Reviews</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="collapse navbar-collapse ms-5" id="navbarNavDropdown">
-                    <ul class="navbar-nav d-flex">
+                    <ul class="d-sm-none d-md-flex navbar-nav d-flex">
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="#">Home</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Features</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Pricing</a>
-                        </li>
-                        <li class="nav-item dropdown position-absolute top-50 end-0 me-5 translate-middle">
+                        <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Menu
+                                More
                             </a>
-                            <ul class="dropdown-menu ">
+                            <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="#">Contact us</a></li>
                                 <li><a class="dropdown-item" href="#">Reviews</a></li>
                             </ul>
@@ -99,10 +129,15 @@
                 </div>
                 
             </section>
+            <section>
+                <div>
+
+                </div>
+            </section>
         </main>
 
         <!-- Footer -->
-        <footer class="d-flex flex-wrap justify-content-around  align-items-center py-3 my-4 border-top position-absolute bottom-0 w-100 px-4 flex-md-row flex-column justify-content-sm-center z-100 bg-light"> 
+        <footer class="d-flex flex-wrap justify-content-around  align-items-center py-3 mt-3 border-top  w-100 px-4 flex-md-row flex-column justify-content-sm-center  bg-light"> 
             <p class="col-md-4 mb-0 text-body-secondary">© 2025 Company, Inc</p> 
 
             <h5 class="text-center mx-auto">Course Bootstrap by Hemmy</h5>
