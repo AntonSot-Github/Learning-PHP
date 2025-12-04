@@ -1,8 +1,0 @@
-name: kinopoisk-areaweb
-recipe: lamp
-config:
-  php: 8.3
-  webroot: .
-services:
-  phpmyadmin:
-    type: phpmyadmin
