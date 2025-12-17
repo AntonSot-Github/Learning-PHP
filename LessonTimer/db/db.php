@@ -16,3 +16,4 @@ $dsn = "mysql:dbname={$db_config['db_name']};host={$db_config['host']};charset=u
 
 $db = new PDO($dsn, $db_config['user'], $db_config['password'], $db_options);
 
+
